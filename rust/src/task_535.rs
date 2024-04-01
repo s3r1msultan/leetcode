@@ -54,7 +54,7 @@ impl Codec {
     }
 }
 
-/**
+/*
  * Your Codec object will be instantiated and called as such:
  * let obj = Codec::new();
  * let s: String = obj.encode(strs);
