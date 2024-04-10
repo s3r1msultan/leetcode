@@ -7,6 +7,7 @@ mod task_2433;
 mod task_205;
 mod task_1;
 mod task_7;
+mod task_950;
 
 fn main() {
 
