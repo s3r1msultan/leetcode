@@ -19,6 +19,8 @@ mod task_268;
 mod task_42;
 mod task_9;
 mod task_85;
+mod task_404;
+mod task_66;
 
 fn main() {
 
