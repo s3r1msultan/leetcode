@@ -65,12 +65,12 @@ pub fn add_one_row(root: Option<Rc<RefCell<TreeNode>>>, val: i32, depth: i32) ->
 
 
 
-#[cfg(test)]
-
-#[test]
-
-fn test_add_one_row() {
-    let tree = build_tree_from_vec(&[4,2,6,3,1,5]);
-    let res = build_tree_from_vec(&[4,1,1,2,null,null,6,3,1,5]);
-    assert_eq!(add_one_row(tree), )
-}
+// #[cfg(test)]
+//
+// #[test]
+//
+// fn test_add_one_row() {
+//     let tree = build_tree_from_vec(&[4,2,6,3,1,5]);
+//     let res = build_tree_from_vec(&[4,1,1,2,null,null,6,3,1,5]);
+//     // assert_eq!(add_one_row(tree), )
+// }
