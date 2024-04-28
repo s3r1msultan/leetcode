@@ -22,7 +22,6 @@
 // 0 <= height[i] <= 105
 //
 
-use std::cmp::min;
 
 pub fn trap(height: Vec<i32>) -> i32 {
     let mut stack = vec![];

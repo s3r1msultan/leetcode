@@ -29,7 +29,6 @@
 //
 
 
-use std::cmp::max;
 
 pub fn maximal_rectangle(matrix: Vec<Vec<char>>) -> i32 {
     if matrix.is_empty() || matrix[0].is_empty() {

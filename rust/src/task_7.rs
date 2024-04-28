@@ -56,5 +56,5 @@ fn test_reverse() {
     let x = -123;
     assert_eq!(reverse(x), -321);
     let x= 120;
-    assert_eq!(reverse(120), 21);
+    assert_eq!(reverse(x), 21);
 }

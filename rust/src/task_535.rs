@@ -44,13 +44,13 @@ impl Codec {
     }
 
     // Encodes a URL to a shortened URL.
-    fn encode(&self, longURL: String) -> String {
-        longURL
+    fn encode(&self, long_url: String) -> String {
+        long_url
     }
 
     // Decodes a shortened URL to its original URL.
-    fn decode(&self, shortURL: String) -> String {
-        shortURL
+    fn decode(&self, short_url: String) -> String {
+        short_url
     }
 }
 

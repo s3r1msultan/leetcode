@@ -32,6 +32,9 @@ mod task_3110;
 mod task_1971;
 mod task_752;
 mod task_310;
+mod task_2370;
+mod task_514;
+mod task_834;
 
 
 fn main() {

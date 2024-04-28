@@ -29,7 +29,7 @@
 // 4 <= n <= 105
 //
 
-pub fn is_strictly_palindromic(n: i32) -> bool {
+pub fn is_strictly_palindromic() -> bool {
     false
 }
 
@@ -38,7 +38,7 @@ pub fn is_strictly_palindromic(n: i32) -> bool {
 #[test]
 fn test_is_strictly_palindromic() {
     let n = 9;
-    assert_eq!(is_strictly_palindromic(n), false);
+    assert_eq!(is_strictly_palindromic(), false);
     let n = 4;
-    assert_eq!(is_strictly_palindromic(n), false);
+    assert_eq!(is_strictly_palindromic(), false);
 }

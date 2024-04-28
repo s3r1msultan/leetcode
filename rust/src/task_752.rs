@@ -48,7 +48,7 @@ fn open_lock(deadends: Vec<String>, target: String) -> i32 {
         let deadends: HashSet<String> = deadends.into_iter().map(String::from).collect();
         let start = "0000".to_string();
         queue.push_back((start.clone(), 0));
-        visited.insert(start);
+        visited.insert(start.clone());
 
         while let Some((current, moves)) = queue.pop_front() {
             if deadends.contains(&start) {

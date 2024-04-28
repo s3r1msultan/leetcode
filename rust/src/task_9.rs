@@ -38,7 +38,7 @@ pub fn is_palindrome(x: i32) -> bool {
     let x = borrow.split("").collect::<Vec<&str>>();
     let mut i = 0;
     let mut j = x.len()-1;
-    while(i<j) {
+    while i<j {
         if x[i] != x[j] {
             return false;
         }

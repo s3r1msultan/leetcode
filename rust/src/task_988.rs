@@ -34,20 +34,20 @@
 //
 
 
-use std::cell::RefCell;
-use std::rc::Rc;
-use crate::tree::TreeNode;
-
-pub fn smallest_from_leaf(root: Option<Rc<RefCell<TreeNode>>>) -> String {
-    let mut smallest = String::new();
-    fn dfs(node: &Option<Rc<RefCell<TreeNode>>>, current_path: &mut Vec<char>, smallest: &mut String) {
-        if let Some(n) = node {
-            let n = n.borrow();
-
-        }
-    }
-    let mut current_path = Vec::new();
-    dfs(&root, &mut current_path, &mut smallest);
-
-    smallest
-}
+// use std::cell::RefCell;
+// use std::rc::Rc;
+// use crate::tree::TreeNode;
+//
+// pub fn smallest_from_leaf(root: Option<Rc<RefCell<TreeNode>>>) -> String {
+//     let mut smallest = String::new();
+//     fn dfs(node: &Option<Rc<RefCell<TreeNode>>>, current_path: &mut Vec<char>, smallest: &mut String) {
+//         if let Some(n) = node {
+//             // let n = n.borrow();
+//
+//         }
+//     }
+//     let mut current_path = Vec::new();
+//     dfs(&root, &mut current_path, &mut smallest);
+//
+//     smallest
+// }
