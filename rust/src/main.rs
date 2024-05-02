@@ -40,6 +40,8 @@ mod task_2011;
 mod task_1470;
 mod task_2000;
 mod task_2610;
+mod task_2;
+mod list;
 
 
 fn main() {

@@ -1,3 +1,5 @@
+use crate::list::ListNode;
+
 // Given the head of a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list. Return the linked list sorted as well.
 //
 //
@@ -11,22 +13,6 @@
 //
 // Input: head = [1,1,1,2,3]
 // Output: [2,3]
-
-#[derive(PartialEq, Eq, Clone, Debug)]
-pub struct ListNode {
-  pub val: i32,
-  pub next: Option<Box<ListNode>>
-}
-
-impl ListNode {
-  #[inline]
-  fn new(val: i32) -> Self {
-    ListNode {
-      next: None,
-      val
-    }
-  }
-}
 pub fn delete_duplicates(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
     let mut dummy_head = Some(Box::new(ListNode{val: 0, next: head}));
     let mut node = &mut dummy_head;
