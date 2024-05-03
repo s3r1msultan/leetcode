@@ -66,9 +66,9 @@ pub fn sum_numbers(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
 #[test]
 
 fn test_sum_numbers() {
-  let tree = build_tree_from_vec(&[1,2,3]);
+  let tree = build_tree_from_vec(vec![1,2,3]);
   assert_eq!(sum_numbers(tree), 25);
 
-  let tree = build_tree_from_vec(&[4,9,0,5,1]);
+  let tree = build_tree_from_vec(vec![4,9,0,5,1]);
   assert_eq!(sum_numbers(tree), 1026);
 }

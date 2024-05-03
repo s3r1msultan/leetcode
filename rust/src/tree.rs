@@ -18,7 +18,7 @@ impl TreeNode {
         }
     }
 }
-pub fn build_tree_from_vec(vals: &[i32]) -> Option<Rc<RefCell<TreeNode>>> {
+pub fn build_tree_from_vec(vals: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
     if vals.is_empty() {
         return None;
     }
@@ -31,16 +31,24 @@ pub fn build_tree_from_vec(vals: &[i32]) -> Option<Rc<RefCell<TreeNode>>> {
         let node = nodes[current_index].clone();
         let left_idx = 2 * current_index + 1;
         if left_idx < vals.len() {
-            let left_node = Rc::new(RefCell::new(TreeNode::new(vals[left_idx])));
-            node.borrow_mut().left = Some(left_node.clone());
-            nodes.push(left_node);
+            if vals[left_idx] == -1 {
+                node.borrow_mut().left = None;
+            } else {
+                let left_node = Rc::new(RefCell::new(TreeNode::new(vals[left_idx])));
+                node.borrow_mut().left = Some(left_node.clone());
+                nodes.push(left_node);
+            }
         }
 
         let right_idx = 2 * current_index + 2;
         if right_idx < vals.len() {
-            let right_node = Rc::new(RefCell::new(TreeNode::new(vals[right_idx])));
-            node.borrow_mut().right = Some(right_node.clone());
-            nodes.push(right_node);
+            if vals[right_idx] == -1 {
+                node.borrow_mut().right = None;
+            } else {
+                let right_node = Rc::new(RefCell::new(TreeNode::new(vals[right_idx])));
+                node.borrow_mut().right = Some(right_node.clone());
+                nodes.push(right_node);
+            }
         }
 
         current_index += 1;
