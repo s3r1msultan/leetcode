@@ -25,7 +25,6 @@
 // Explanation: For the node with value 1: The average of its subtree is 1 / 1 = 1.
 
 use std::cell::RefCell;
-use std::ffi::c_void;
 use std::rc::Rc;
 use crate::tree::{build_tree_from_vec, TreeNode};
 
