@@ -30,7 +30,6 @@
 // 1 <= quality[i], wage[i] <= 104
 //
 
-use std::cmp::max;
 use std::collections::BinaryHeap;
 use std::fmt::Debug;
 
