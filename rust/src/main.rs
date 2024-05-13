@@ -57,6 +57,7 @@ mod task_786;
 mod task_857;
 mod my_heap;
 mod task_2373;
+mod task_861;
 
 
 fn main() {
