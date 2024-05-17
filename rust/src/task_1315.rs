@@ -33,7 +33,7 @@ pub fn sum_even_grandparent(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
 	return traverse(root, false);
 	fn traverse(root: Option<Rc<RefCell<TreeNode>>>, is_even: bool) -> i32 {
 		if let Some(root_node) = root {
-			let borrowed = root_node.borrow();
+			let mut borrowed = root_node.borrow_mut();
 			let flag = borrowed.val % 2 == 0;
 			let mut sum = 0;
 			if borrowed.left.is_some() && is_even {
@@ -43,7 +43,7 @@ pub fn sum_even_grandparent(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
 			if borrowed.right.is_some() && is_even {
 				sum+=borrowed.right.as_ref().unwrap().borrow().val;
 			}
-			sum += traverse(borrowed.left.clone(), flag) + traverse(borrowed.right.clone(), flag);
+			sum += traverse(borrowed.left.take(), flag) + traverse(borrowed.right.take(), flag);
 			return sum;
 		}
 		return 0;
