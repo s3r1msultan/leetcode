@@ -1,21 +1,6 @@
 use std::cell::RefCell;
 use std::rc::Rc;
-
-struct TreeNode {
-    pub val: i32,
-    pub left: Option<Rc<RefCell<TreeNode>>>,
-    pub right: Option<Rc<RefCell<TreeNode>>>
-}
-
-impl TreeNode {
-    pub fn new(val:i32) -> Self {
-        TreeNode {
-            val,
-            left: None,
-            right: None
-        }
-    }
-}
+use crate::tree::TreeNode;
 
 pub fn sum_of_left_leaves(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
     helper(root.as_ref(), false)
