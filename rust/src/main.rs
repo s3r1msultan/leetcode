@@ -86,6 +86,7 @@ mod task_1208;
 mod task_2486;
 mod task_409;
 mod task_1002;
+mod task_846;
 
 
 fn main() {
