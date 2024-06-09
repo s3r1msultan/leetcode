@@ -67,7 +67,28 @@ mod task_2859;
 mod task_2220;
 mod task_1456;
 mod task_1219;
-mod task_974;
+mod task_2331;
+mod task_2236;
+mod task_3;
+mod task_13;
+mod task_1325;
+mod task_1315;
+mod task_938;
+mod task_1281;
+mod task_3068;
+mod task_2807;
+mod task_78;
+mod task_131;
+mod task_14;
+mod task_20;
+mod task_21;
+mod task_1208;
+mod task_2486;
+mod task_409;
+mod task_1002;
+mod task_846;
+mod task_648;
+mod task_523;
 
 
 fn main() {

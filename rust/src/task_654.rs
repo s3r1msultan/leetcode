@@ -1,84 +1,89 @@
-use crate::tree::TreeNode;
-use std::{cell::RefCell, rc::Rc};
+/*
+You are given an integer array nums with no duplicates. A maximum binary tree can be built recursively from nums using the following algorithm:
 
-// You are given an integer array nums with no duplicates. A maximum binary tree can be built recursively from nums using the following algorithm:
-//
-// Create a root node whose value is the maximum value in nums.
-// Recursively build the left subtree on the subarray prefix to the left of the maximum value.
-// Recursively build the right subtree on the subarray suffix to the right of the maximum value.
-//
-// Return the maximum binary tree built from nums.
-//
-//
-//
-// Example 1:
-//
-// Input: nums = [3,2,1,6,0,5]
-// Output: [6,3,5,null,2,0,null,null,1]
-// Explanation: The recursive calls are as follow:
-// - The largest value in [3,2,1,6,0,5] is 6. Left prefix is [3,2,1] and right suffix is [0,5].
-// - The largest value in [3,2,1] is 3. Left prefix is [] and right suffix is [2,1].
-// - Empty array, so no child.
-// - The largest value in [2,1] is 2. Left prefix is [] and right suffix is [1].
-// - Empty array, so no child.
-// - Only one element, so child is a node with value 1.
-// - The largest value in [0,5] is 5. Left prefix is [0] and right suffix is [].
-// - Only one element, so child is a node with value 0.
-// - Empty array, so no child.
-//
-// Example 2:
-//
-// Input: nums = [3,2,1]
-// Output: [3,null,2,null,1]
-//
-//
-//
-// Constraints:
-//
-// 1 <= nums.length <= 1000
-// 0 <= nums[i] <= 1000
-// All integers in nums are unique.
-//
+    Create a root node whose value is the maximum value in nums.
+    Recursively build the left subtree on the subarray prefix to the left of the maximum value.
+    Recursively build the right subtree on the subarray suffix to the right of the maximum value.
+
+Return the maximum binary tree built from nums.
+
+
+
+Example 1:
+
+Input: nums = [3,2,1,6,0,5]
+Output: [6,3,5,null,2,0,null,null,1]
+Explanation: The recursive calls are as follow:
+- The largest value in [3,2,1,6,0,5] is 6. Left prefix is [3,2,1] and right suffix is [0,5].
+    - The largest value in [3,2,1] is 3. Left prefix is [] and right suffix is [2,1].
+        - Empty array, so no child.
+        - The largest value in [2,1] is 2. Left prefix is [] and right suffix is [1].
+            - Empty array, so no child.
+            - Only one element, so child is a node with value 1.
+    - The largest value in [0,5] is 5. Left prefix is [0] and right suffix is [].
+        - Only one element, so child is a node with value 0.
+        - Empty array, so no child.
+
+Example 2:
+
+Input: nums = [3,2,1]
+Output: [3,null,2,null,1]
+
+
+
+Constraints:
+
+    1 <= nums.length <= 1000
+    0 <= nums[i] <= 1000
+    All integers in nums are unique.
+
+*/
+
+
+use std::cell::RefCell;
+use std::rc::Rc;
+use crate::tree::{build_tree_from_vec, TreeNode};
+
 pub fn construct_maximum_binary_tree(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
-    return construct(0, nums.len() - 1, &nums);
-    fn construct(left: usize, right: usize, nums: &Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
-        if left > right {
-            return None;
-        }
+	fn construct(left: usize, right: usize, nums: &Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
+		if left > right {
+			return None;
+		}
 
-        let &max_num = nums[left..=right].iter().max().unwrap();
-        let max_index = nums[left..=right]
-            .iter()
-            .position(|&x| x == max_num)
-            .unwrap()
-            + left;
-        let node = Rc::new(RefCell::new(TreeNode::new(max_num)));
-        {
-            let mut borrowed_mut = node.borrow_mut();
-            if max_index > 0 {
-                borrowed_mut.left = construct(left, max_index - 1, nums);
-            }
-            if max_index < nums.len() - 1 {
-                borrowed_mut.right = construct(max_index + 1, right, nums);
-            }
-        }
-        return Some(node);
-    }
+		let &max_num = nums[left..=right].iter().max().unwrap();
+		let max_index = nums[left..=right].iter().position(|&x| x == max_num).unwrap() + left;
+		let node = Rc::new(RefCell::new(TreeNode::new(max_num)));
+		{
+			let mut borrowed_mut = node.borrow_mut();
+			if max_index > 0 {
+				borrowed_mut.left = construct(left, max_index-1, nums);
+			}
+			if max_index < nums.len()-1 {
+				borrowed_mut.right = construct(max_index+1, right, nums);
+			}
+		}
+		return Some(node);
+	}
+	if nums.len() - 1 > 0 {
+		let left = 0;
+		let right = nums.len() - 1;
+		return construct(left, right, &nums);
+	}
+	return None;
+
 }
 
+
 #[cfg(test)]
+
 #[test]
 
 fn test_construct_maximum_binary_tree() {
-    use crate::tree::build_tree_from_vec;
+	let nums = vec![3,2,1,6,0,5];
+	let result = build_tree_from_vec(vec![6,3,5,-1,2,0,-1,-1,1]);
+	assert_eq!(construct_maximum_binary_tree(nums), result);
 
-    let nums = vec![3, 2, 1, 6, 0, 5];
-    let result = build_tree_from_vec(vec![6, 3, 5, -1, 2, 0, -1, -1, 1]);
-
-    assert_eq!(construct_maximum_binary_tree(nums), result);
-
-    let nums = vec![3, 2, 1];
-    let result = build_tree_from_vec(vec![3, -1, 2, -1, 1]);
-
-    assert_eq!(construct_maximum_binary_tree(nums), result);
+	let nums = vec![3,2,1];
+	let result = build_tree_from_vec(vec![3,-1,2,-1,1]);
+	assert_eq!(construct_maximum_binary_tree(nums), result);
 }
