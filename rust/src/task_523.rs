@@ -64,13 +64,13 @@ fn test_check_subarray_sum() {
 	let nums = vec![23,2,4,6,7];
 	let k = 6;
 	let result = true;
-	assert_eq!(check_subarray_sum(nums,k), result);
+	assert_eq!(check_subarray_sum(nums.clone(),k), result);
 
 	let k = 6;
 	let result = true;
-	assert_eq!(check_subarray_sum(nums,k), result);
+	assert_eq!(check_subarray_sum(nums.clone(),k), result);
 
 	let k = 13;
 	let result = false;
-	assert_eq!(check_subarray_sum(nums,k), result);
+	assert_eq!(check_subarray_sum(nums.clone(),k), result);
 }

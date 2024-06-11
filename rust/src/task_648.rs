@@ -33,22 +33,22 @@ sentence does not have leading or trailing spaces.
 */
 
 
-fn replace_words(dictionary: Vec<String>, sentence: String) -> String {
-
-}
-
-#[cfg(test)]
-
-#[test]
-
-fn test_replace_words() {
-	let dictionary = vec!["cat".to_string(),"bat".to_string(),"rat".to_string()];
-	let sentence = "the cattle was rattled by the battery".to_string();
-	let result = "the cat was rat by the bat".to_string();
-	assert_eq!(replace_words(dictionary, sentence), result);
-
-	let dictionary = vec!["a".to_string(),"b".to_string(),"c".to_string()];
-	let sentence = "aadsfasf absbs bbab cadsfafs".to_string();
-	let result = "a a b c".to_string();
-	assert_eq!(replace_words(dictionary, sentence), result);
-}
+// fn replace_words(dictionary: Vec<String>, sentence: String) -> String {
+//
+// }
+//
+// #[cfg(test)]
+//
+// #[test]
+//
+// fn test_replace_words() {
+// 	let dictionary = vec!["cat".to_string(),"bat".to_string(),"rat".to_string()];
+// 	let sentence = "the cattle was rattled by the battery".to_string();
+// 	let result = "the cat was rat by the bat".to_string();
+// 	assert_eq!(replace_words(dictionary, sentence), result);
+//
+// 	let dictionary = vec!["a".to_string(),"b".to_string(),"c".to_string()];
+// 	let sentence = "aadsfasf absbs bbab cadsfafs".to_string();
+// 	let result = "a a b c".to_string();
+// 	assert_eq!(replace_words(dictionary, sentence), result);
+// }
