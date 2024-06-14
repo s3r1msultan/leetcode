@@ -30,8 +30,8 @@ use crate::tree::{build_tree_from_vec, TreeNode};
 fn average_of_levels(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<f64> {
 	let mut queue = VecDeque::new();
 	queue.push_back((root, 0));
-	let mut counts: Vec<i32> = vec![];
-	let mut sums: Vec<i32> = vec![];
+	let mut counts: Vec<i64> = vec![];
+	let mut sums: Vec<i64> = vec![];
 
 	while let Some((node, pos)) = queue.pop_front() {
 		if let Some(subtree) = node {
@@ -42,7 +42,7 @@ fn average_of_levels(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<f64> {
 				counts.push(0);
 			}
 
-			sums[pos] += borrowed.val;
+			sums[pos] += borrowed.val as i64;
 			counts[pos] += 1;
 
 			queue.push_back((borrowed.left.clone(), pos + 1));
