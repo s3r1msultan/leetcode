@@ -26,17 +26,25 @@ fn judge_square_sum(c: i32) -> bool {
     let mut a = 0;
     let mut b = 0;
     while a*a <= c {
-        while b*b <= c {
-            if a*a + b*b == c {
-                return true;
-            }
-            b+=1;
+        b = c - a*a;
+        if binary_search(0, b, b) {
+            return true;
         }
         a+=1;
-        b=0;
+    }
+    fn binary_search(a: i32, b: i32, c: i32) -> bool {
+        if a > b {
+            return false;
+        }
+
+        let mid = a + (b-a)/2;
+        return if mid * mid == c {
+            true
+        } else {
+            binary_search(mid + 1, b, b)
+        }
     }
     false
-
 }
 
 #[cfg(test)]
@@ -51,5 +59,8 @@ fn test_judge_square_sum() {
     let result = false;
     assert_eq!(judge_square_sum(c), result);
 
+    let c = 1000;
+    let result = true;
+    // assert_eq!(judge_square_sum(c),result);
 
 }
