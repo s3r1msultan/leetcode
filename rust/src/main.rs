@@ -109,8 +109,9 @@ mod task_2485;
 mod task_1588;
 mod task_633;
 mod task_826;
+mod task_1323;
+mod task_1290;
+mod task_5;
 
 
-fn main() {
-
-}
+fn main() {}
