@@ -31,27 +31,29 @@ Constraints:
 
 */
 
-// fn number_of_subarrays(nums: Vec<i32>, k: i32) -> i32 {
-// let mut prefix_sum_counts = HashMap::new();
-// prefix_sum_counts.insert(0, 1);
-// let mut prefix_sum = 0;
-// let mut current_prefix_sum = 0;
-//
-// for num in nums {
-// 	if num % 2 == 1{
-// 		current_prefix_sum+=1;
-// 	}
-//
-// 	if let Some(&occurrences) = prefix_sum_counts.get(&(current_prefix_sum-k)) {
-// 		prefix_sum +=occurrences;
-// 	}
-//
-// 	*prefix_sum_counts.entry(current_prefix_sum).or_insert(0) += 1;
-// }
-//
-//
-// prefix_sum
-// }
+use std::collections::HashMap;
+
+fn number_of_subarrays(nums: Vec<i32>, k: i32) -> i32 {
+	let mut prefix_sum_counts = HashMap::new();
+	prefix_sum_counts.insert(0, 1);
+	let mut prefix_sum = 0;
+	let mut current_prefix_sum = 0;
+
+	for num in nums {
+		if num % 2 == 1 {
+			current_prefix_sum += 1;
+		}
+
+		if let Some(&occurrences) = prefix_sum_counts.get(&(current_prefix_sum - k)) {
+			prefix_sum += occurrences;
+		}
+
+		*prefix_sum_counts.entry(current_prefix_sum).or_insert(0) += 1;
+	}
+
+
+	prefix_sum
+}
 
 
 // WRONG IDEA
