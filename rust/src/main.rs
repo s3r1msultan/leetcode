@@ -150,5 +150,6 @@ mod task_2582;
 mod task_1672;
 mod task_1476;
 mod task_807;
+mod task_2181;
 
 fn main() {}
