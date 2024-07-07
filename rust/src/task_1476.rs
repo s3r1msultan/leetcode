@@ -27,10 +27,8 @@ impl SubrectangleQueries {
 
 #[cfg(test)]
 #[test]
-
-fn test_subrectangle_queries {
-	let rectangle = vec![vec![1,2,1],vec![4,3,4],vec![3,2,1],vec![1,1,1]];
+fn test_subrectangle_queries() {
+	let rectangle = vec![vec![1, 2, 1], vec![4, 3, 4], vec![3, 2, 1], vec![1, 1, 1]];
 	let subrectangle_queries = SubrectangleQueries::new(rectangle);
-	let value1 = subrectangle_queries.get_value(0,2);
-
+	let value1 = subrectangle_queries.get_value(0, 2);
 }
