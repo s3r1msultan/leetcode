@@ -42,19 +42,17 @@ Folder names consist of lowercase English letters and digits.
 
 */
 
-use std::collections::VecDeque;
-
 fn min_operations(logs: Vec<String>) -> i32 {
-	let mut stack = VecDeque::new();
+	let mut stack = vec![];
 	for log in logs {
 		let chars = log.chars().collect::<Vec<char>>();
 
 		if chars[0] == '.' {
 			if chars[1] == '.' {
-				stack.pop_front();
+				stack.pop();
 			}
 		} else {
-			stack.push_front(log);
+			stack.push(log);
 		}
 	}
 	stack.len() as i32
