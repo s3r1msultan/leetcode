@@ -12,7 +12,7 @@ impl SubrectangleQueries {
 		SubrectangleQueries { rectangle }
 	}
 
-	fn update_subrectangle(&self, row1: i32, col1: i32, row2: i32, col2: i32, new_value: i32) {
+	fn update_subrectangle(&mut self, row1: i32, col1: i32, row2: i32, col2: i32, new_value: i32) {
 		for i in row1 as usize..=row2 as usize {
 			for j in col1 as usize..=col2 as usize {
 				self.rectangle[i][j] = new_value;

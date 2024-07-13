@@ -40,7 +40,7 @@ n == grid[r].length
 
 fn max_increase_keeping_skyline(grid: Vec<Vec<i32>>) -> i32 {
 	use std::cmp::min;
-	let max_rows = grid.iter().map(|vec| vec.iter().max()).collect::<Vec<i32>>();
+	let max_rows = grid.iter().map(|vec| *vec.iter().max().unwrap()).collect::<Vec<i32>>();
 	let mut max_columns = vec![0; grid.len()];
 	for j in 0..grid[0].len() {
 		for i in 0..grid.len() {
