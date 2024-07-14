@@ -41,13 +41,15 @@ Constraints:
 fn asteroids_destroyed(mass: i32, asteroids: Vec<i32>) -> bool {
 	let mut mass: i64 = mass as i64;
 	let mut asteroids = asteroids;
+	let max_mass = asteroids.iter().fold(0i64, |acc, &curr| acc + curr as i64) + mass;
 	asteroids.sort_unstable();
 	for asteroid in asteroids {
 		if mass >= asteroid as i64 {
 			mass += asteroid as i64;
 		} else {
-			return false;
+			break;
 		}
 	}
-	true
+
+	mass == max_mass
 }
