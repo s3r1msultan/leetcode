@@ -34,33 +34,30 @@
 use std::collections::HashSet;
 
 pub fn max_vowels(s: String, k: i32) -> i32 {
-	let k= k as usize;
+	let k = k as usize;
 	let set = HashSet::from(['a', 'e', 'u', 'o', 'i']);
 	let mut max = 0;
 	let s: Vec<char> = s.chars().collect();
 	for i in 0..k {
 		if set.contains(&s[i]) {
-			max+=1;
+			max += 1;
 		}
 	}
 	let mut curr = max;
-	let mut left = k;
-	while left <= s.len() - 1 {
-		if set.contains(&s[left - k]) {
+	for i in k..s.len() {
+		if set.contains(&s[i - k]) {
 			curr -= 1;
 		}
-		if set.contains(&s[left]) {
+		if set.contains(&s[i]) {
 			curr += 1;
+			max = max.max(curr);
 		}
-		max = max.max(curr);
-		left+=1;
 	}
 	max
 }
 
 #[cfg(test)]
 #[test]
-
 fn test_max_vowels() {
 	let s = "abciiidef".to_string();
 	let k = 3;

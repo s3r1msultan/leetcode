@@ -55,9 +55,9 @@ fn create_binary_tree(descriptions: Vec<Vec<i32>>) -> Option<Rc<RefCell<TreeNode
 		let parent_node = nodes.entry(parent).or_insert_with(|| Rc::new(RefCell::new(TreeNode::new(parent)))).clone();
 		let child_node = nodes.entry(child).or_insert_with(|| Rc::new(RefCell::new(TreeNode::new(child)))).clone();
 		if is_left {
-			parent_node.borrow_mut().left = Some(Rc::clone(&child_node));
+			parent_node.borrow_mut().left = Some(child_node);
 		} else {
-			parent_node.borrow_mut().right = Some(Rc::clone(&child_node));
+			parent_node.borrow_mut().right = Some(child_node);
 		}
 	}
 
@@ -65,7 +65,6 @@ fn create_binary_tree(descriptions: Vec<Vec<i32>>) -> Option<Rc<RefCell<TreeNode
 
 	nodes.get(root_num).cloned()
 }
-
 
 #[cfg(test)]
 #[test]
