@@ -1,4 +1,4 @@
-use crate::list::ListNode;
+use crate::data_structures::list::ListNode;
 
 // You are given the head of a linked list.
 //

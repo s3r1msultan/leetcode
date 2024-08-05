@@ -26,7 +26,7 @@
 
 use std::cell::RefCell;
 use std::rc::Rc;
-use crate::tree::{build_tree_from_vec, TreeNode};
+use crate::data_structures::tree::{build_tree_from_vec, TreeNode};
 
 pub fn average_of_subtree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
 	let mut k = 0;
@@ -39,14 +39,14 @@ pub fn average_of_subtree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
 			let (n1, sum1) = sum_of_subtree(borrowed.left.take(), k);
 			let (n2, sum2) = sum_of_subtree(borrowed.right.take(), k);
 			n += n1 + n2;
-			sum+=sum1+sum2;
+			sum += sum1 + sum2;
 			if sum / n == borrowed.val {
 				*k += 1
 			}
 			(n, sum)
 		} else {
 			(0, 0)
-		}
+		};
 	}
 	k
 }
@@ -54,9 +54,8 @@ pub fn average_of_subtree(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
 
 #[cfg(test)]
 #[test]
-
 fn test_average_of_subtree() {
-	let tree = build_tree_from_vec(vec![4,8,5,0,1,-1,6]);
+	let tree = build_tree_from_vec(vec![4, 8, 5, 0, 1, -1, 6]);
 	let result = 5;
 	assert_eq!(average_of_subtree(tree), result);
 }

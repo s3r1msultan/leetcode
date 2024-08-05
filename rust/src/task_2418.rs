@@ -35,6 +35,6 @@ fn sort_people(names: Vec<String>, heights: Vec<i32>) -> Vec<String> {
 	let mut names = names;
 	let mut zipped = names.into_iter().zip(heights.into_iter()).collect::<Vec<_>>();
 	zipped.sort_unstable_by(|a, b| a.1.cmp(&b.1));
-	names = zipped.iter().map(|zipped| zipped.0).collect();
+	names = zipped.iter().map(|zipped| zipped.0.clone()).collect();
 	names
 }

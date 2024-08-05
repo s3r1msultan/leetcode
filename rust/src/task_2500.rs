@@ -40,17 +40,17 @@ n == grid[i].length
 
 */
 
-fn delete_greatest_value(grid: Vec<Vec<i32>>) -> i32 {
-	let mut sum = 0;
-	let mut grid = grid;
-	let mut m = grid.len();
-	grid.iter_mut().for_each(|row| *row.sort_unstable());
-	for j in 0..grid[0].len() {
-		let mut max = 0;
-		for i in 0..grid.len() {
-			max = max.max(grid[i][j]);
-		}
-		sum += max;
-	}
-	sum
-}
+// fn delete_greatest_value(grid: Vec<Vec<i32>>) -> i32 {
+// 	let mut sum = 0;
+// 	let mut grid = grid;
+// 	let mut m = grid.len();
+// 	grid.iter_mut().for_each(|row| *row.sort_unstable());
+// 	for j in 0..grid[0].len() {
+// 		let mut max = 0;
+// 		for i in 0..grid.len() {
+// 			max = max.max(grid[i][j]);
+// 		}
+// 		sum += max;
+// 	}
+// 	sum
+// }

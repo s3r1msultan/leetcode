@@ -31,7 +31,7 @@ Constraints:
 */
 
 
-use crate::list::ListNode;
+use crate::data_structures::list::ListNode;
 
 fn merge_in_between(list1: Option<Box<ListNode>>, a: i32, b: i32, list2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
 	let mut head = list1;

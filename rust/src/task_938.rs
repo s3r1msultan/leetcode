@@ -27,7 +27,7 @@ Constraints:
 
 use std::cell::RefCell;
 use std::rc::Rc;
-use crate::tree::TreeNode;
+use crate::data_structures::tree::TreeNode;
 /*
 pub fn range_sum_bst(root: Option<Rc<RefCell<TreeNode>>>, low: i32, high: i32) -> i32 {
 	if let Some(root_node) = root {
@@ -53,7 +53,7 @@ pub fn range_sum_bst(root: Option<Rc<RefCell<TreeNode>>>, low: i32, high: i32) -
 		let root = stack.pop().unwrap();
 		let mut borrowed = root.borrow_mut();
 		if low <= borrowed.val && borrowed.val <= high {
-			sum+=borrowed.val;
+			sum += borrowed.val;
 		}
 		if borrowed.left.is_some() {
 			stack.push(borrowed.left.take().unwrap());

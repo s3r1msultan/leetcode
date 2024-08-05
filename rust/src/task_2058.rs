@@ -47,54 +47,54 @@ The number of nodes in the list is in the range [2, 105].
 
 */
 
-use crate::list::ListNode;
+use crate::data_structures::list::ListNode;
 
 fn nodes_between_critical_points(head: Option<Box<ListNode>>) -> Vec<i32> {
-    let mut head = head;
-    let mut prev_value = 0;
-    let mut indices = vec![];
-    let mut index = 0;
+	let mut head = head;
+	let mut prev_value = 0;
+	let mut indices = vec![];
+	let mut index = 0;
 
 
-    while let Some(node) = head {
-        if node.next.is_some() && prev_value != 0 {
-            if node.next.as_ref().unwrap().val < node.val && prev_value < node.val {
-                indices.push(index);
-            }
+	while let Some(node) = head {
+		if node.next.is_some() && prev_value != 0 {
+			if node.next.as_ref().unwrap().val < node.val && prev_value < node.val {
+				indices.push(index);
+			}
 
-            if node.next.as_ref().unwrap().val > node.val && prev_value > node.val {
-                indices.push(index);
-            }
-        }
-        prev_value = node.val;
-        index += 1;
-        head = node.next;
-    }
+			if node.next.as_ref().unwrap().val > node.val && prev_value > node.val {
+				indices.push(index);
+			}
+		}
+		prev_value = node.val;
+		index += 1;
+		head = node.next;
+	}
 
-    if indices.len() < 2 {
-        return vec![-1, -1];
-    }
+	if indices.len() < 2 {
+		return vec![-1, -1];
+	}
 
-    let mut min_diff = i32::MAX;
-    for i in 1..indices.len() {
-        min_diff = min_diff.min(indices[i] - indices[i - 1]);
-    }
+	let mut min_diff = i32::MAX;
+	for i in 1..indices.len() {
+		min_diff = min_diff.min(indices[i] - indices[i - 1]);
+	}
 
-    vec![min_diff, indices.last().unwrap() - indices.first().unwrap()]
+	vec![min_diff, indices.last().unwrap() - indices.first().unwrap()]
 }
 
 #[cfg(test)]
 #[test]
 fn test_nodes_between_critical_points() {
-    let head = ListNode::from_vec(vec![3, 1]);
-    let result = vec![-1, -1];
-    assert_eq!(nodes_between_critical_points(head), result);
+	let head = ListNode::from_vec(vec![3, 1]);
+	let result = vec![-1, -1];
+	assert_eq!(nodes_between_critical_points(head), result);
 
-    let head = ListNode::from_vec(vec![5, 3, 1, 2, 5, 1, 2]);
-    let result = vec![1, 3];
-    assert_eq!(nodes_between_critical_points(head), result);
+	let head = ListNode::from_vec(vec![5, 3, 1, 2, 5, 1, 2]);
+	let result = vec![1, 3];
+	assert_eq!(nodes_between_critical_points(head), result);
 
-    let head = ListNode::from_vec(vec![1, 3, 2, 2, 3, 2, 2, 2, 7]);
-    let result = vec![3, 3];
-    assert_eq!(nodes_between_critical_points(head), result);
+	let head = ListNode::from_vec(vec![1, 3, 2, 2, 3, 2, 2, 2, 7]);
+	let result = vec![3, 3];
+	assert_eq!(nodes_between_critical_points(head), result);
 }

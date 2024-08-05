@@ -31,42 +31,41 @@
 
 // use crate::list::ListNode;
 
-use crate::list::ListNode;
+use crate::data_structures::list::ListNode;
+
 pub fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-  let mut head_1 = l1;
-  let mut head_2 = l2;
-  let mut remainder = 0;
-  let mut res: Option<Box<ListNode>> = None;
-  let mut tail = &mut res;
-  while head_1.is_some() || head_2.is_some() || remainder != 0 {
-    let val1 = head_1.as_ref().map_or(0, |node| node.val);
-    let val2 = head_2.as_ref().map_or(0, |node| node.val);
-    let sum = val1 + val2 + remainder;
-    remainder = sum / 10;
-    let sum = sum % 10;
+	let mut head_1 = l1;
+	let mut head_2 = l2;
+	let mut remainder = 0;
+	let mut res: Option<Box<ListNode>> = None;
+	let mut tail = &mut res;
+	while head_1.is_some() || head_2.is_some() || remainder != 0 {
+		let val1 = head_1.as_ref().map_or(0, |node| node.val);
+		let val2 = head_2.as_ref().map_or(0, |node| node.val);
+		let sum = val1 + val2 + remainder;
+		remainder = sum / 10;
+		let sum = sum % 10;
 
-    let new_node = Box::new(ListNode::new(sum));
-    if let Some(ref mut t) = *tail {
-      t.next = Some(new_node);
-    } else {
-      *tail = Some(new_node);
-    }
+		let new_node = Box::new(ListNode::new(sum));
+		if let Some(ref mut t) = *tail {
+			t.next = Some(new_node);
+		} else {
+			*tail = Some(new_node);
+		}
 
-    tail = &mut tail.as_mut().unwrap().next;
+		tail = &mut tail.as_mut().unwrap().next;
 
-    head_1 = head_1.and_then(|node| node.next);
-    head_2 = head_2.and_then(|node| node.next);
-  }
-  res
+		head_1 = head_1.and_then(|node| node.next);
+		head_2 = head_2.and_then(|node| node.next);
+	}
+	res
 }
 
 #[cfg(test)]
-
 #[test]
-
 fn test_add_two_numbers() {
-  let l1: Option<Box<ListNode>> = ListNode::from_vec(vec![2, 4, 3]);
-  let l2: Option<Box<ListNode>> = ListNode::from_vec(vec![5,6,4]);
-  let res: Option<Box<ListNode>> = ListNode::from_vec(vec![7, 0, 8]);
-  assert_eq!(add_two_numbers(l1,l2), res);
+	let l1: Option<Box<ListNode>> = ListNode::from_vec(vec![2, 4, 3]);
+	let l2: Option<Box<ListNode>> = ListNode::from_vec(vec![5, 6, 4]);
+	let res: Option<Box<ListNode>> = ListNode::from_vec(vec![7, 0, 8]);
+	assert_eq!(add_two_numbers(l1, l2), res);
 }

@@ -39,7 +39,7 @@ The binary tree described by descriptions is valid.
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::tree::{build_tree_from_vec, TreeNode};
+use crate::data_structures::tree::{build_tree_from_vec, TreeNode};
 
 fn create_binary_tree(descriptions: Vec<Vec<i32>>) -> Option<Rc<RefCell<TreeNode>>> {
 	use std::collections::{HashMap, HashSet};

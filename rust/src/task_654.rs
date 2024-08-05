@@ -42,7 +42,7 @@ Constraints:
 
 use std::cell::RefCell;
 use std::rc::Rc;
-use crate::tree::{build_tree_from_vec, TreeNode};
+use crate::data_structures::tree::{build_tree_from_vec, TreeNode};
 
 pub fn construct_maximum_binary_tree(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
 	fn construct(left: usize, right: usize, nums: &Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
@@ -56,10 +56,10 @@ pub fn construct_maximum_binary_tree(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNo
 		{
 			let mut borrowed_mut = node.borrow_mut();
 			if max_index > 0 {
-				borrowed_mut.left = construct(left, max_index-1, nums);
+				borrowed_mut.left = construct(left, max_index - 1, nums);
 			}
-			if max_index < nums.len()-1 {
-				borrowed_mut.right = construct(max_index+1, right, nums);
+			if max_index < nums.len() - 1 {
+				borrowed_mut.right = construct(max_index + 1, right, nums);
 			}
 		}
 		return Some(node);
@@ -70,20 +70,17 @@ pub fn construct_maximum_binary_tree(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNo
 		return construct(left, right, &nums);
 	}
 	return None;
-
 }
 
 
 #[cfg(test)]
-
 #[test]
-
 fn test_construct_maximum_binary_tree() {
-	let nums = vec![3,2,1,6,0,5];
-	let result = build_tree_from_vec(vec![6,3,5,-1,2,0,-1,-1,1]);
+	let nums = vec![3, 2, 1, 6, 0, 5];
+	let result = build_tree_from_vec(vec![6, 3, 5, -1, 2, 0, -1, -1, 1]);
 	assert_eq!(construct_maximum_binary_tree(nums), result);
 
-	let nums = vec![3,2,1];
-	let result = build_tree_from_vec(vec![3,-1,2,-1,1]);
+	let nums = vec![3, 2, 1];
+	let result = build_tree_from_vec(vec![3, -1, 2, -1, 1]);
 	assert_eq!(construct_maximum_binary_tree(nums), result);
 }

@@ -25,7 +25,7 @@
 // The input is generated such that the list represents a number that does not have leading zeros, except the number 0 itself.
 //
 
-use crate::list::ListNode;
+use crate::data_structures::list::ListNode;
 
 pub fn double_it(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
 	let mut head = head;
@@ -38,9 +38,9 @@ pub fn double_it(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
 
 	let mut result: Option<Box<ListNode>> = None;
 	while let Some(mut node) = stack.pop() {
-		let double = node.val*2 + res;
-		res = double/10;
-		node.val = double%10;
+		let double = node.val * 2 + res;
+		res = double / 10;
+		node.val = double % 10;
 		node.next = result;
 		result = Some(node);
 	}

@@ -38,7 +38,7 @@ startValue != destValue
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::tree::{build_tree_from_vec, TreeNode};
+use crate::data_structures::tree::{build_tree_from_vec, TreeNode};
 
 fn get_directions(root: Option<Rc<RefCell<TreeNode>>>, start_value: i32, dest_value: i32) -> String {
 	fn find_path(node: &Option<Rc<RefCell<TreeNode>>>, val: i32, path: &mut Vec<char>) -> bool {

@@ -24,15 +24,15 @@
 // The number of nodes in the list is the range [0, 5000].
 // -5000 <= Node.val <= 5000
 
-use crate::list::ListNode;
+use crate::data_structures::list::ListNode;
 
 pub fn reverse_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-    let mut head = head;
-    let mut result:Option<Box<ListNode>> = Option::from(Box::new(ListNode::new(0)));
-    while let Some(mut node) = head {
-        head = node.next.take();
-        node.next = result;
-        result = Some(node);
-    }
-    result
+	let mut head = head;
+	let mut result: Option<Box<ListNode>> = Option::from(Box::new(ListNode::new(0)));
+	while let Some(mut node) = head {
+		head = node.next.take();
+		node.next = result;
+		result = Some(node);
+	}
+	result
 }
