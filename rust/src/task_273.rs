@@ -36,7 +36,7 @@ fn number_to_words(num: i32) -> String {
 
 		if num / 100 != 0 {
 			result.push(' ');
-			result.push_str(ones[num / 100]);
+			result.push_str(ones[(num / 100) as usize]);
 			result.push_str(" Hundred ");
 			num %= 100;
 		}
