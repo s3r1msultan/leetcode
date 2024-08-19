@@ -71,9 +71,3 @@ impl KthLargest {
 		self.heap.peek().unwrap().0
 	}
 }
-
-/**
- * Your KthLargest object will be instantiated and called as such:
- * let obj = KthLargest::new(k, nums);
- * let ret_1: i32 = obj.add(val);
- */
