@@ -45,22 +45,20 @@ Constraints:
 */
 use std::rc::Rc;
 use std::cell::RefCell;
-use crate::tree::TreeNode;
+use crate::data_structures::tree::TreeNode;
 
 pub fn evaluate_tree(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
-		if let Some(root_node) = root {
-			let mut
-			borrowed = root_node.borrow_mut();
-			return match borrowed.val {
-				0 => false,
-				1 => true,
-				2 => evaluate_tree(borrowed.left.take()) || evaluate_tree(borrowed.right.take()),
-				3 => evaluate_tree(borrowed.left.take()) && evaluate_tree(borrowed.right.take()),
-				_ => false,
-			}
-
-		} else {
-			return false;
-		}
-
+	if let Some(root_node) = root {
+		let mut
+		borrowed = root_node.borrow_mut();
+		return match borrowed.val {
+			0 => false,
+			1 => true,
+			2 => evaluate_tree(borrowed.left.take()) || evaluate_tree(borrowed.right.take()),
+			3 => evaluate_tree(borrowed.left.take()) && evaluate_tree(borrowed.right.take()),
+			_ => false,
+		};
+	} else {
+		return false;
 	}
+}

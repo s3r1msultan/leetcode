@@ -40,7 +40,7 @@
 
 use std::cell::RefCell;
 use std::rc::Rc;
-use crate::tree::{build_tree_from_vec, TreeNode};
+use crate::data_structures::tree::{build_tree_from_vec, TreeNode};
 
 pub fn sum_numbers(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
   fn dfs(node: &Option<Rc<RefCell<TreeNode>>>, current_sum: i32) -> i32 {
@@ -53,7 +53,7 @@ pub fn sum_numbers(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
         } else {
           dfs(&node.left, new_sum) + dfs(&node.right, new_sum)
         }
-      },
+      }
       None => 0
     }
   }

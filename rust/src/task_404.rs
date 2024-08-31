@@ -1,6 +1,6 @@
 use std::cell::RefCell;
 use std::rc::Rc;
-use crate::tree::TreeNode;
+use crate::data_structures::tree::TreeNode;
 
 pub fn sum_of_left_leaves(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
     helper(root.as_ref(), false)
@@ -19,7 +19,7 @@ fn helper(node: Option<&Rc<RefCell<TreeNode>>>, is_left: bool) -> i32 {
             } else {
                 helper(node.left.as_ref(), true) + helper(node.right.as_ref(), false)
             }
-        },
+        }
         None => 0
     }
 }

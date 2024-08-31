@@ -36,7 +36,7 @@ The number of nodes in the list is in the range [1, 5000].
 
 
 use std::ops::Deref;
-use crate::list::ListNode;
+use crate::data_structures::list::ListNode;
 
 fn insert_greatest_common_divisors(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
 	fn gcd(a: i32, b: i32) -> i32 {
@@ -61,12 +61,12 @@ fn insert_greatest_common_divisors(mut head: Option<Box<ListNode>>) -> Option<Bo
 	}
 	head
 }
+
 #[cfg(test)]
 #[test]
-
 fn test_insert_greatest_common_divisors() {
-	let head = ListNode::from_vec(vec![18,6,10,3]);
-	let result = ListNode::from_vec(vec![18,6,6,2,10,1,]);
+	let head = ListNode::from_vec(vec![18, 6, 10, 3]);
+	let result = ListNode::from_vec(vec![18, 6, 6, 2, 10, 1]);
 	assert_eq!(insert_greatest_common_divisors(head), result);
 	let head = ListNode::from_vec(vec![7]);
 	let result = ListNode::from_vec(vec![7]);

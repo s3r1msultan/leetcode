@@ -27,7 +27,7 @@ Constraints:
 
 use std::cell::RefCell;
 use std::rc::Rc;
-use crate::tree::{build_tree_from_vec, TreeNode};
+use crate::data_structures::tree::{build_tree_from_vec, TreeNode};
 
 pub fn sum_even_grandparent(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
 	return traverse(root, false);
@@ -37,11 +37,11 @@ pub fn sum_even_grandparent(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
 			let flag = borrowed.val % 2 == 0;
 			let mut sum = 0;
 			if borrowed.left.is_some() && is_even {
-				sum+=borrowed.left.as_ref().unwrap().borrow().val;
+				sum += borrowed.left.as_ref().unwrap().borrow().val;
 			}
 
 			if borrowed.right.is_some() && is_even {
-				sum+=borrowed.right.as_ref().unwrap().borrow().val;
+				sum += borrowed.right.as_ref().unwrap().borrow().val;
 			}
 			sum += traverse(borrowed.left.take(), flag) + traverse(borrowed.right.take(), flag);
 			return sum;
@@ -52,11 +52,9 @@ pub fn sum_even_grandparent(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
 
 
 #[cfg(test)]
-
 #[test]
-
 fn test_sum_even_grandparent() {
-	let root = build_tree_from_vec(vec![6,7,8,2,7,1,3,9,-1,1,4,-1,-1,-1,5]);
+	let root = build_tree_from_vec(vec![6, 7, 8, 2, 7, 1, 3, 9, -1, 1, 4, -1, -1, -1, 5]);
 	let result = 18;
 	assert_eq!(sum_even_grandparent(root), result);
 

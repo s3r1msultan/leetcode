@@ -37,35 +37,35 @@ The beginning and end of the linked list have Node.val == 0.
 */
 
 
-use crate::list::ListNode;
+use crate::data_structures::list::ListNode;
 
 fn merge_nodes(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-    let mut head = head.unwrap().next;
-    let mut result_head = Box::new(ListNode::new(0));
-    let mut result_next = &mut result_head;
-    let mut sum = 0;
-    while let Some(node) = head {
-        if node.val == 0 {
-            let new_node = Box::new(ListNode::new(sum));
-            sum = 0;
-            result_next.next = Some(new_node);
-            result_next = result_next.next.as_mut().unwrap();
-        } else {
-            sum += node.val;
-        }
-        head = node.next;
-    }
-    result_head.next
+	let mut head = head.unwrap().next;
+	let mut result_head = Box::new(ListNode::new(0));
+	let mut result_next = &mut result_head;
+	let mut sum = 0;
+	while let Some(node) = head {
+		if node.val == 0 {
+			let new_node = Box::new(ListNode::new(sum));
+			sum = 0;
+			result_next.next = Some(new_node);
+			result_next = result_next.next.as_mut().unwrap();
+		} else {
+			sum += node.val;
+		}
+		head = node.next;
+	}
+	result_head.next
 }
 
 #[cfg(test)]
 #[test]
 fn test_merge_nodes() {
-    let head = ListNode::from_vec(vec![0, 3, 1, 0, 4, 5, 2, 0]);
-    let result = ListNode::from_vec(vec![4, 11]);
-    assert_eq!(merge_nodes(head), result);
+	let head = ListNode::from_vec(vec![0, 3, 1, 0, 4, 5, 2, 0]);
+	let result = ListNode::from_vec(vec![4, 11]);
+	assert_eq!(merge_nodes(head), result);
 
-    let head = ListNode::from_vec(vec![0, 1, 0, 3, 0, 2, 2, 0]);
-    let result = ListNode::from_vec(vec![1, 3, 4]);
-    assert_eq!(merge_nodes(head), result);
+	let head = ListNode::from_vec(vec![0, 1, 0, 3, 0, 2, 2, 0]);
+	let result = ListNode::from_vec(vec![1, 3, 4]);
+	assert_eq!(merge_nodes(head), result);
 }

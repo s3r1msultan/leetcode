@@ -33,7 +33,7 @@ Constraints:
 
 use std::cell::RefCell;
 use std::rc::Rc;
-use crate::tree::{build_tree_from_vec, TreeNode};
+use crate::data_structures::tree::{build_tree_from_vec, TreeNode};
 
 pub fn remove_leaf_nodes(root: Option<Rc<RefCell<TreeNode>>>, target: i32) -> Option<Rc<RefCell<TreeNode>>> {
 	if let Some(root_node) = root {
@@ -51,21 +51,19 @@ pub fn remove_leaf_nodes(root: Option<Rc<RefCell<TreeNode>>>, target: i32) -> Op
 }
 
 #[cfg(test)]
-
 #[test]
-
 fn test_remove_leaf_nodes() {
-	let root = build_tree_from_vec(vec![1,2,3,2,-1,2,4]);
+	let root = build_tree_from_vec(vec![1, 2, 3, 2, -1, 2, 4]);
 	let target = 2;
-	let result = build_tree_from_vec(vec![1,-1,3,-1,4]);
+	let result = build_tree_from_vec(vec![1, -1, 3, -1, 4]);
 	assert_eq!(remove_leaf_nodes(root, target), result);
 
-	let root = build_tree_from_vec(vec![1,3,3,3,2]);
+	let root = build_tree_from_vec(vec![1, 3, 3, 3, 2]);
 	let target = 3;
-	let result = build_tree_from_vec(vec![1,3,-1,-1,2]);
+	let result = build_tree_from_vec(vec![1, 3, -1, -1, 2]);
 	assert_eq!(remove_leaf_nodes(root, target), result);
 
-	let root = build_tree_from_vec(vec![1,2,-1,2,-1,2]);
+	let root = build_tree_from_vec(vec![1, 2, -1, 2, -1, 2]);
 	let target = 2;
 	let result = build_tree_from_vec(vec![1]);
 	assert_eq!(remove_leaf_nodes(root, target), result);

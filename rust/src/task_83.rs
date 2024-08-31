@@ -14,24 +14,20 @@
 //
 // Definition for singly-linked list.
 
-use crate::list::ListNode;
+use crate::data_structures::list::ListNode;
 
 pub fn delete_duplicates(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-  let mut current = head;
-  let mut node = &mut current;
-  while let Some(curr) = node {
-    while curr.next.as_ref().map_or(false, |next| next.val == curr.val) {
-      curr.next = curr.next.as_mut().unwrap().next.take();
-    }
-    node = &mut curr.next;
-  }
-  current
+	let mut current = head;
+	let mut node = &mut current;
+	while let Some(curr) = node {
+		while curr.next.as_ref().map_or(false, |next| next.val == curr.val) {
+			curr.next = curr.next.as_mut().unwrap().next.take();
+		}
+		node = &mut curr.next;
+	}
+	current
 }
 
 #[cfg(test)]
-
 #[test]
-
-fn test_delete_duplicates() {
-
-}
+fn test_delete_duplicates() {}

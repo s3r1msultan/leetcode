@@ -31,7 +31,7 @@ Both list1 and list2 are sorted in non-decreasing order.
 
 */
 
-use crate::list::ListNode;
+use crate::data_structures::list::ListNode;
 
 fn merge_two_lists(
 	list1: Option<Box<ListNode>>,

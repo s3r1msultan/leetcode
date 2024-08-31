@@ -29,7 +29,7 @@ The tree consists only of the root, its left child, and its right child.
 
 use std::cell::RefCell;
 use std::rc::Rc;
-use crate::tree::{build_tree_from_vec, TreeNode};
+use crate::data_structures::tree::{build_tree_from_vec, TreeNode};
 
 // pub fn check_tree(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
 // 	let left_val = root.as_ref().unwrap().borrow().left.as_ref().unwrap().borrow().val;
@@ -41,20 +41,19 @@ pub fn check_tree(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
 		let borrowed = root_node.borrow();
 		let left_val = borrowed.left.as_ref().unwrap().borrow().val;
 		let right_val = borrowed.right.as_ref().unwrap().borrow().val;
-		return borrowed.val == left_val  + right_val;
+		return borrowed.val == left_val + right_val;
 	}
 	return false;
 }
 
 #[cfg(test)]
 #[test]
-
 fn test_check_tree() {
-	let root = build_tree_from_vec(vec![10,4,6]);
+	let root = build_tree_from_vec(vec![10, 4, 6]);
 	let result = true;
 	assert_eq!(check_tree(root), result);
 
-	let root = build_tree_from_vec(vec![5,3,1]);
+	let root = build_tree_from_vec(vec![5, 3, 1]);
 	let result = false;
 	assert_eq!(check_tree(root), result);
 }

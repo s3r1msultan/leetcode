@@ -25,7 +25,7 @@ The number of nodes in the tree is in the range [1, 104].
 use std::cell::RefCell;
 use std::collections::VecDeque;
 use std::rc::Rc;
-use crate::tree::{build_tree_from_vec, TreeNode};
+use crate::data_structures::tree::{build_tree_from_vec, TreeNode};
 
 fn average_of_levels(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<f64> {
 	let mut queue = VecDeque::new();
@@ -50,7 +50,7 @@ fn average_of_levels(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<f64> {
 		}
 	}
 	let mut result: Vec<f64> = vec![];
-	for (&sum ,&count) in sums.iter().zip(counts.iter()) {
+	for (&sum, &count) in sums.iter().zip(counts.iter()) {
 		result.push(sum as f64 / count as f64)
 	}
 	result
@@ -59,11 +59,11 @@ fn average_of_levels(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<f64> {
 #[cfg(test)]
 #[test]
 fn test_average_of_levels() {
-	let root = build_tree_from_vec( vec![3,9,20,-1,-1,15,7]);
-	let result = vec![3.00000,14.50000,11.00000];
-	assert_eq!(average_of_levels(root),result);
+	let root = build_tree_from_vec(vec![3, 9, 20, -1, -1, 15, 7]);
+	let result = vec![3.00000, 14.50000, 11.00000];
+	assert_eq!(average_of_levels(root), result);
 
-	let root = build_tree_from_vec( vec![3,9,20,15,7]);
-	let result = vec![3.00000,14.50000,11.00000];
-	assert_eq!(average_of_levels(root),result);
+	let root = build_tree_from_vec(vec![3, 9, 20, 15, 7]);
+	let result = vec![3.00000, 14.50000, 11.00000];
+	assert_eq!(average_of_levels(root), result);
 }

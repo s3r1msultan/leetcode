@@ -25,7 +25,7 @@ The number of nodes in the list is in the range [1, 100].
 
 */
 
-use crate::list::ListNode;
+use crate::data_structures::list::ListNode;
 
 fn middle_node(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
 	let mut slow = &head;

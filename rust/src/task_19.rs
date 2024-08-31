@@ -27,25 +27,25 @@
 // 1 <= n <= sz
 
 
-use crate::list::ListNode;
+use crate::data_structures::list::ListNode;
 
 pub fn remove_nth_from_end(head: Option<Box<ListNode>>, n: i32) -> Option<Box<ListNode>> {
-    let mut head = head;
-    let mut stack: Vec<Box<ListNode>> = Vec::new();
-    while let Some(mut node) = head {
-        head = node.next.take();
-        stack.push(node);
-    }
+	let mut head = head;
+	let mut stack: Vec<Box<ListNode>> = Vec::new();
+	while let Some(mut node) = head {
+		head = node.next.take();
+		stack.push(node);
+	}
 
-    let mut result: Option<Box<ListNode>> = None;
-    let mut k = 0;
-    while let Some(mut node) = stack.pop() {
-        k+=1;
-        if k == n {
-            continue;
-        }
-        node.next = result;
-        result = Some(node);
-    }
-    result
+	let mut result: Option<Box<ListNode>> = None;
+	let mut k = 0;
+	while let Some(mut node) = stack.pop() {
+		k += 1;
+		if k == n {
+			continue;
+		}
+		node.next = result;
+		result = Some(node);
+	}
+	result
 }

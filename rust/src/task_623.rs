@@ -25,45 +25,44 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::tree::TreeNode;
+use crate::data_structures::tree::TreeNode;
 
 pub fn add_one_row(root: Option<Rc<RefCell<TreeNode>>>, val: i32, depth: i32) -> Option<Rc<RefCell<TreeNode>>> {
-    if depth == 1 {
-        let new_root = Rc::new(RefCell::new(TreeNode::new(val)));
-        new_root.borrow_mut().left = root;
-        return Some(new_root);
-    }
+	if depth == 1 {
+		let new_root = Rc::new(RefCell::new(TreeNode::new(val)));
+		new_root.borrow_mut().left = root;
+		return Some(new_root);
+	}
 
-    fn helper(node: &Rc<RefCell<TreeNode>>, val: i32, depth: i32, curr_depth: i32) {
-        if curr_depth == depth - 1 {
-            let left_child = node.borrow_mut().left.take();
-            let right_child = node.borrow_mut().right.take();
+	fn helper(node: &Rc<RefCell<TreeNode>>, val: i32, depth: i32, curr_depth: i32) {
+		if curr_depth == depth - 1 {
+			let left_child = node.borrow_mut().left.take();
+			let right_child = node.borrow_mut().right.take();
 
-            let new_left = Rc::new(RefCell::new(TreeNode::new(val)));
-            let new_right = Rc::new(RefCell::new(TreeNode::new(val)));
+			let new_left = Rc::new(RefCell::new(TreeNode::new(val)));
+			let new_right = Rc::new(RefCell::new(TreeNode::new(val)));
 
-            new_left.borrow_mut().left = left_child;
-            new_right.borrow_mut().right = right_child;
+			new_left.borrow_mut().left = left_child;
+			new_right.borrow_mut().right = right_child;
 
-            node.borrow_mut().left = Some(new_left);
-            node.borrow_mut().right = Some(new_right);
-        } else {
-            if let Some(ref left) = node.borrow().left {
-                helper(left, val, depth, curr_depth + 1);
-            }
-            if let Some(ref right) = node.borrow().right {
-                helper(right, val, depth, curr_depth + 1);
-            }
-        }
-    }
+			node.borrow_mut().left = Some(new_left);
+			node.borrow_mut().right = Some(new_right);
+		} else {
+			if let Some(ref left) = node.borrow().left {
+				helper(left, val, depth, curr_depth + 1);
+			}
+			if let Some(ref right) = node.borrow().right {
+				helper(right, val, depth, curr_depth + 1);
+			}
+		}
+	}
 
-    if let Some(ref root_node) = root {
-        helper(root_node, val, depth, 1);
-    }
+	if let Some(ref root_node) = root {
+		helper(root_node, val, depth, 1);
+	}
 
-    root
+	root
 }
-
 
 
 // #[cfg(test)]

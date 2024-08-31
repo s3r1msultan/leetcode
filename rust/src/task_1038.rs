@@ -30,31 +30,31 @@ All the values in the tree are unique.
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use crate::tree::{build_tree_from_vec, TreeNode};
+use crate::data_structures::tree::{build_tree_from_vec, TreeNode};
 
 fn bst_to_gst(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
-    fn traverse(root: &Option<Rc<RefCell<TreeNode>>>, sum: &mut i32) {
-        if let Some(head) = root {
-            let mut borrowed = head.borrow_mut();
-            traverse(&borrowed.right, sum);
-            *sum += borrowed.val;
-            borrowed.val = *sum;
-            traverse(&borrowed.left, sum);
-        }
-    }
+	fn traverse(root: &Option<Rc<RefCell<TreeNode>>>, sum: &mut i32) {
+		if let Some(head) = root {
+			let mut borrowed = head.borrow_mut();
+			traverse(&borrowed.right, sum);
+			*sum += borrowed.val;
+			borrowed.val = *sum;
+			traverse(&borrowed.left, sum);
+		}
+	}
 
-    let mut sum = 0;
-    traverse(&root, &mut sum);
-    return root;
+	let mut sum = 0;
+	traverse(&root, &mut sum);
+	return root;
 }
 
 #[cfg(test)]
 #[test]
 fn test_bst_to_gst() {
-    let root = build_tree_from_vec(vec![4, 1, 6, 0, 2, 5, 7, -1, -1, -1, 3, -1, -1, -1, 8]);
-    let result = build_tree_from_vec(vec![30, 36, 21, 36, 35, 26, 15, -1, -1, -1, 33, -1, -1, -1, 8]);
-    assert_eq!(bst_to_gst(root), result);
-    let root = build_tree_from_vec(vec![0, -1, 1]);
-    let result = build_tree_from_vec(vec![1, -1, 1]);
-    assert_eq!(bst_to_gst(root), result);
+	let root = build_tree_from_vec(vec![4, 1, 6, 0, 2, 5, 7, -1, -1, -1, 3, -1, -1, -1, 8]);
+	let result = build_tree_from_vec(vec![30, 36, 21, 36, 35, 26, 15, -1, -1, -1, 33, -1, -1, -1, 8]);
+	assert_eq!(bst_to_gst(root), result);
+	let root = build_tree_from_vec(vec![0, -1, 1]);
+	let result = build_tree_from_vec(vec![1, -1, 1]);
+	assert_eq!(bst_to_gst(root), result);
 }
