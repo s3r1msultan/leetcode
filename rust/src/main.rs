@@ -242,5 +242,6 @@ mod task_2022;
 mod task_1894;
 mod task_1945;
 mod task_874;
+mod task_2028;
 
 fn main() {}
