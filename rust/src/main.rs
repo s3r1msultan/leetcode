@@ -243,5 +243,7 @@ mod task_1894;
 mod task_1945;
 mod task_874;
 mod task_2028;
+mod task_3217;
+mod task_300;
 
 fn main() {}
