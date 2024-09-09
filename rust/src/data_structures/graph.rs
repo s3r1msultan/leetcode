@@ -1,23 +1,21 @@
-use std::io::{stdin, stdout, Write};
-
 struct Graph {}
 
 impl Graph {
-	pub fn read_graph() {
-		let mut input = String::new();
-		println!("Enter number of vertices: ");
-		let _ = stdout().flush();
-		stdin().read_line(&mut input).expect("Did not enter a number of vertices in graph");
-		let vertices_number = input.parse::<usize>().unwrap();
-		let _ = stdout().flush();
-		println!("Enter number of edges: ");
-		let _ = stdout().flush();
-		stdin().read_line(&mut input).expect("Did not enter a number of vertices in graph");
-		let edges_number = input.parse::<usize>().unwrap();
-
-		let mut connections = vec![];
-		for i in 0..edges_number {}
-	}
+	// pub fn read_graph() {
+	// 	let mut input = String::new();
+	// 	println!("Enter number of vertices: ");
+	// 	let _ = stdout().flush();
+	// 	stdin().read_line(&mut input).expect("Did not enter a number of vertices in graph");
+	// 	let vertices_number = input.parse::<usize>().unwrap();
+	// 	let _ = stdout().flush();
+	// 	println!("Enter number of edges: ");
+	// 	let _ = stdout().flush();
+	// 	stdin().read_line(&mut input).expect("Did not enter a number of vertices in graph");
+	// 	let edges_number = input.parse::<usize>().unwrap();
+	//
+	// 	let mut connections: Vec<_> = vec![];
+	// 	for i in 0..edges_number {}
+	// }
 }
 
 
