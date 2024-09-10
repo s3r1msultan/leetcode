@@ -41,7 +41,7 @@ pub fn spiral_matrix(m: i32, n: i32, head: Option<Box<ListNode>>) -> Vec<Vec<i32
 	let mut bottom = m;
 	let mut left = 0;
 	let mut right = n;
-	let mut matrix = vec![vec![-1; n]; m];`
+	let mut matrix = vec![vec![-1; n]; m];
 	while top < bottom && left < right {
 		for i in left..right {
 			if let Some(node) = head {
@@ -53,19 +53,19 @@ pub fn spiral_matrix(m: i32, n: i32, head: Option<Box<ListNode>>) -> Vec<Vec<i32
 
 		for i in top..bottom {
 			if let Some(node) = head {
-				matrix[i][right-1] = node.val;
+				matrix[i][right - 1] = node.val;
 				head = node.next;
 			}
 		}
-		right-=1;
+		right -= 1;
 
 		for i in (left..right).rev() {
 			if let Some(node) = head {
-				matrix[bottom-1][i] = node.val;
+				matrix[bottom - 1][i] = node.val;
 				head = node.next;
 			}
 		}
-		bottom-=1;
+		bottom -= 1;
 
 		for i in (top..bottom).rev() {
 			if let Some(node) = head {
@@ -73,7 +73,7 @@ pub fn spiral_matrix(m: i32, n: i32, head: Option<Box<ListNode>>) -> Vec<Vec<i32
 				head = node.next;
 			}
 		}
-		left+=1;
+		left += 1;
 	}
 	matrix
 }

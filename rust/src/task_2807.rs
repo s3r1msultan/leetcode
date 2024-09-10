@@ -33,32 +33,40 @@ The number of nodes in the list is in the range [1, 5000].
 1 <= Node.val <= 1000
 
 */
+enum Something {
+	Some(_),
+	None,
+}
 
 
-use std::ops::Deref;
 use crate::data_structures::list::ListNode;
 
-fn insert_greatest_common_divisors(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+fn insert_greatest_common_divisors(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
 	fn gcd(a: i32, b: i32) -> i32 {
 		if b == 0 {
 			return a;
 		}
 		gcd(b, a % b)
 	}
+	let mut head = head;
 	let mut current = head.as_mut();
-	while let Some(cur_node) = current {
-		if let Some(next_node) = cur_node.next.as_mut() {
-			let gcd_value = gcd(cur_node.val, next_node.val);
-			let new_node = Box::new(ListNode {
-				val: gcd_value,
-				next: cur_node.next.take(),
+
+	while let Some(mut curr_node) = current {
+		if let Some(next_node) = curr_node.next.as_mut() {
+			let curr_value = curr_node.val;
+			let next_value = next_node.val;
+			let gcd = gcd(curr_value, next_value);
+			let list_node = Box::new(ListNode {
+				val: gcd,
+				next: curr_node.next.take(),
 			});
-			cur_node.next = Some(new_node);
-			current = cur_node.next.as_mut().unwrap().next.as_mut();
+			curr_node.next = Some(list_node);
+			current = curr_node.next.as_mut().unwrap().next.as_mut();
 		} else {
 			break;
 		}
 	}
+
 	head
 }
 
