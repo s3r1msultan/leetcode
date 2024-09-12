@@ -36,34 +36,32 @@ words[i] and allowed contain only lowercase English letters.
 
 
 fn count_consistent_strings(allowed: String, words: Vec<String>) -> i32 {
-    use std::collections::HashSet;
-    let mut set = HashSet::new();
-    for char in allowed.chars() {
-        set.insert(char);
-    }
-    let n = set.len();
-    let mut count = 0;
+	let mut set = [0; 26];
+	for char in allowed.chars() {
+		set[char as usize - 'a' as usize] = 1;
+	}
+	let mut count = 0;
 
-    for word in words {
-        let mut current_count = 0;
-        for char in word.chars() {
-            if set.contains(&char) {
-                current_count += 1;
-            }
-        }
-        if current_count == n {
-            count += 1;
-        }
-        current_count = 0;
-    }
+	for word in words {
+		let mut flag = true;
+		for char in word.chars() {
+			if set[char as usize - 'a' as usize] == 0 {
+				flag = false;
+				break;
+			}
+		}
+		if flag {
+			count += 1;
+		}
+	}
 
-    count
+	count
 }
 
 #[cfg(test)]
 #[test]
 fn test_count_consistent_strings() {
-    let allowed = "ab".to_string();
-    let words = ["ad", "bd", "aaab", "baa", "badab"];
-    let result = 2;
+	let allowed = "ab".to_string();
+	let words = ["ad", "bd", "aaab", "baa", "badab"];
+	let result = 2;
 }
