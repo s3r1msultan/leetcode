@@ -33,24 +33,34 @@ Constraints:
 1 <= nums[i] <= 104
 
 */
-use std::collections::HashMap;
 
 fn delete_and_earn(nums: Vec<i32>) -> i32 {
-	let n = nums.len();
+	use std::collections::HashMap;
 	let mut nums_count: HashMap<i32, i32> = HashMap::new();
 
 	for &num in nums.iter() {
 		*nums_count.entry(num).or_insert(0) += 1;
 	}
 
-	let mut dp: HashMap<i32, i32> = HashMap::new();
-	for (&num, &count) in nums_count.iter() {
-		*dp.entry(num).or_insert(0) += num * count;
+	let mut unique_nums: Vec<_> = nums_count.keys().cloned().collect();
+	unique_nums.sort();
+	let n = unique_nums.len();
+
+	let mut prev1 = 0;
+	let mut prev2 = 0;
+
+	for &num in unique_nums.iter() {
+		let current = num * nums_count[&num];
+		if let Some(&prev_num) = unique_nums.iter().rev().find(|&&x| x == num - 1) {
+			let temp = prev1;
+			prev1 = prev1.max(prev2 + current);
+			prev2 = temp;
+		} else {
+			let temp = prev1;
+			prev1 += current;
+			prev2 = temp;
+		}
 	}
 
-	for (num, count) in nums_count.iter() {}
-
-	for i in 0..n {}
-
-	*dp.iter().max_by(|a, b| a.1.cmp(b.1)).unwrap()
+	prev1
 }

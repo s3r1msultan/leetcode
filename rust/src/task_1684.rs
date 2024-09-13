@@ -35,17 +35,39 @@ words[i] and allowed contain only lowercase English letters.
 */
 
 
-fn count_consistent_strings(allowed: String, words: Vec<String>) -> i32 {
-	let mut set = [0; 26];
-	for char in allowed.chars() {
-		set[char as usize - 'a' as usize] = 1;
-	}
-	let mut count = 0;
+// fn count_consistent_strings(allowed: String, words: Vec<String>) -> i32 {
+// 	let mut set = [0; 26];
+// 	for char in allowed.chars() {
+// 		set[char as usize - 'a' as usize] = 1;
+// 	}
+// 	let mut count = 0;
+//
+// 	for word in words {
+// 		let mut flag = true;
+// 		for char in word.chars() {
+// 			if set[char as usize - 'a' as usize] == 0 {
+// 				flag = false;
+// 				break;
+// 			}
+// 		}
+// 		if flag {
+// 			count += 1;
+// 		}
+// 	}
+//
+// 	count
+// }
 
+pub fn count_consistent_strings(allowed: String, words: Vec<String>) -> i32 {
+	let mut count = 0;
+	let mut mask = 0;
+	for char in allowed.chars() {
+		mask |= 1 << (char as u8 - 'a' as u8);
+	}
 	for word in words {
 		let mut flag = true;
 		for char in word.chars() {
-			if set[char as usize - 'a' as usize] == 0 {
+			if mask >> (char as u8 - 'a' as u8) & 1 {
 				flag = false;
 				break;
 			}
@@ -54,7 +76,6 @@ fn count_consistent_strings(allowed: String, words: Vec<String>) -> i32 {
 			count += 1;
 		}
 	}
-
 	count
 }
 
