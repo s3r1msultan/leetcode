@@ -266,5 +266,10 @@ mod task_698;
 mod task_416;
 mod task_179;
 mod task_997;
+mod task_841;
+mod task_547;
+mod task_746;
+mod weekly_contest_415;
+mod task_241;
 
 fn main() {}
