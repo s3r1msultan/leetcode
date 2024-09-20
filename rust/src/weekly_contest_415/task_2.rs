@@ -34,6 +34,18 @@ a.length == 4
 
 */
 
-// fn max_score(a: Vec<i32>, b: Vec<i32>) -> i64 {
-//
-// }
+fn max_score(a: Vec<i32>, b: Vec<i32>) -> i64 {
+	if b.len() == 4 {
+		return a[0] as i64 * b[0] as i64 + a[1] as i64 * b[1] as i64 + a[2] as i64 * b[2] as i64 + a[3] as i64 * b[3] as i64;
+	}
+	let n = b.len();
+	let mut dp = vec![i32::MIN as i64; 4];
+	for &val in &b {
+		dp[3] = dp[3].max(a[3] as i64 * val as i64 + dp[2]);
+		dp[2] = dp[2].max(a[2] as i64 * val as i64 + dp[1]);
+		dp[1] = dp[1].max(a[1] as i64 * val as i64 + dp[0]);
+		dp[0] = dp[0].max(a[0] as i64 * val as i64);
+	}
+
+	dp[3]
+}
