@@ -36,21 +36,14 @@ n is even.
 
 */
 
-pub fn can_arrange(arr: Vec<i32>, k: i32) -> bool {
-	let mut map = vec![0; k as usize];
-	for &val in &arr {
-		map[((val % k + k) % k) as usize] += 1;
-	}
 
-	for val in arr {
-		let rem = (val % k + k) % k;
-		if rem == 0 {
-			if map[val] % 2 == 1 {
-				return false;
-			}
-		} else if map[rem] != map[val - rem] {
-			return false;
-		}
-	}
-	true
+pub fn can_arrange(arr: Vec<i32>, k: i32) -> bool {
+        let mut sum: i64 = arr.iter().fold(0, |acc, &x| {
+            if acc % k as i64 == 0 {
+               0
+            } else {
+                acc + x as i64
+            }
+        });
+        sum % k as i64 == 0
 }
