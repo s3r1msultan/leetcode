@@ -297,5 +297,9 @@ mod task_962;
 mod task_632;
 mod task_2530;
 mod task_2938;
+mod task_203;
+mod task_1405;
+mod task_767;
+mod task_1926;
 
 fn main() {}
