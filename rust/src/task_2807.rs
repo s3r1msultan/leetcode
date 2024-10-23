@@ -33,10 +33,10 @@ The number of nodes in the list is in the range [1, 5000].
 1 <= Node.val <= 1000
 
 */
-enum Something {
-	Some(_),
-	None,
-}
+// enum Something {
+// 	Some(_),
+// 	None,
+// }
 
 
 use crate::data_structures::list::ListNode;

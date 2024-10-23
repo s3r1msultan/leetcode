@@ -115,7 +115,7 @@ impl MyCircularDeque {
 	}
 }
 
-/**
+/*
  * Your MyCircularDeque object will be instantiated and called as such:
  * let obj = MyCircularDeque::new(k);
  * let ret_1: bool = obj.insert_front(value);

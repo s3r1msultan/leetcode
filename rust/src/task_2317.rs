@@ -33,13 +33,11 @@ Constraints:
 */
 
 fn maximum_xor(nums: Vec<i32>) -> i32 {
-	let mut max = 0;
 	let mut xor = 0;
 	for num in nums {
-		xor^=num;
+		xor|=num;
 	}
-
-	max
+	xor
 }
 
 

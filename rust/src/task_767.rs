@@ -60,7 +60,7 @@ pub fn reorganize_string(s: String) -> String {
 
 
 	if s.len() == result.len() {
-		result.collect()
+		result.into_iter().collect()
 	} else {
 		"".to_string()
 	}
