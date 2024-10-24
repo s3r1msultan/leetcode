@@ -33,10 +33,6 @@ Constraints:
 The number of nodes in the binary tree is in the range [1, 10^5].
 Each node's value is between [-10^4, 10^4].
 */
-use std::cell::RefCell;
-use std::collections::VecDeque;
-use std::rc::Rc;
-use crate::data_structures::tree::TreeNode;
 
 // pub fn good_nodes(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
 //     fn dfs(node: Option<&Rc<RefCell<TreeNode>>>, max: i32) -> i32 {
@@ -55,8 +51,7 @@ use crate::data_structures::tree::TreeNode;
 //     dfs(root.as_ref(), i32::MIN)
 // }
 
-
-pub fn good_nodes(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
+/*pub fn good_nodes(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
     use std::collections::VecDeque;
     let mut queue = VecDeque::new();
     queue.push_back((i32::MIN, root));
@@ -80,4 +75,32 @@ pub fn good_nodes(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
         queue.push_back((val, borrowed.right.clone()));
     }
     count
+}*/
+use crate::data_structures::tree::TreeNode;
+use std::cell::RefCell;
+use std::rc::Rc;
+
+pub fn good_nodes(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
+    fn dfs(root: Option<&Rc<RefCell<TreeNode>>>, max: i32) -> i32 {
+        if root.is_none() { return 0; }
+        let mut max = max;
+        let node = root.unwrap();
+        let borrowed = node.borrow();
+        let mut count = 0;
+        if borrowed.val >= max {
+            max = borrowed.val;
+            count += 1;
+        }
+        if borrowed.left.is_some() {
+            count += dfs(borrowed.left.as_ref(), max);
+        }
+
+        if borrowed.right.is_some() {
+            count += dfs(borrowed.right.as_ref(), max);
+        }
+
+        count
+    }
+
+    dfs(root.as_ref(), i32::MIN)
 }
