@@ -28,7 +28,7 @@ use std::rc::Rc;
 
 pub fn max_depth(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
 	if let Some(node) = root {
-		let mut borrowed = node.borrow();
+		let mut borrowed = node.borrow_mut();
 		max_depth(borrowed.left.take()).max(max_depth(borrowed.right.take())) + 1
 	} else {
 		0

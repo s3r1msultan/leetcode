@@ -46,7 +46,7 @@ struct CustomStack {
 }
 
 
-/**
+/*
  * `&self` means the method takes an immutable reference.
  * If you need a mutable reference, change it to `&mut self` instead.
  */
@@ -80,7 +80,7 @@ impl CustomStack {
 	}
 }
 
-/**
+/*
  * Your CustomStack object will be instantiated and called as such:
  * let obj = CustomStack::new(maxSize);
  * obj.push(x);

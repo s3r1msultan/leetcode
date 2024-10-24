@@ -50,83 +50,32 @@ struct MyCalendarTwo {
 impl MyCalendarTwo {
 	fn new() -> Self {
 		MyCalendarTwo {
-			root: Box::new(Interval::new(0, 1_000_000_000))
+			booked: Vec::new(),
+			overlaps: Vec::new(),
 		}
 	}
 
 	fn book(&mut self, start: i32, end: i32) -> bool {
-		if self.dfs(&self.root, start, end) {
-			return false;
+		for &(o_start, o_end) in &self.overlaps {
+			if start < o_end && end > o_start {
+				return false;
+			}
 		}
-		self.update(&mut self.root, start, end);
+
+		for &(b_start, b_end) in &self.booked {
+			if start < b_end && end > b_start {
+				let overlap_start = start.max(b_start);
+				let overlap_end = end.min(b_end);
+				self.overlaps.push((overlap_start, overlap_end));
+			}
+		}
+
+		self.booked.push((start, end));
 		true
 	}
-
-	fn dfs(&mut self, current_node: &Box<Interval>, given_start: i32, given_end: i32) -> bool {
-		let start = current_node.start;
-		let end = current_node.end;
-		if start >= given_end || end <= given_start {
-			return false;
-		}
-		if current_node.count_of_booking >= 2 {
-			return true;
-		}
-
-		let left_has_overlapping = if let Some(ref node) = current_node.left {
-			self.dfs(node, given_start, given_end)
-		} else {
-			false
-		};
-
-		let right_has_overlapping = if let Some(ref node) = current_node.right {
-			self.dfs(node, given_start, given_end)
-		} else {
-			false
-		};
-
-		left_has_overlapping || right_has_overlapping
-	}
-
-	fn update(&mut self, current_node: &mut Box<Interval>, given_start: i32, given_end: i32) {
-		if current_node.start >= given_end || current_node.end <= given_start {
-			return;
-		}
-		current_node.count_of_booking += 1;
-		let mid = current_node.start + (current_node.end - current_node.start) / 2;
-		if current_node.left.is_none() {
-			current_node.left = Some(Box::new(Interval::new(current_node.start, mid)));
-		}
-
-		if current_node.right.is_none() {
-			current_node.right = Some(Box::new(Interval::new(mid, current_node.end)));
-		}
-
-		self.update(current_node.left.as_mut().unwrap(), given_start, given_end);
-		self.update(current_node.right.as_mut().unwrap(), given_start, given_end);
-	}
 }
 
-struct Interval {
-	count_of_booking: i32,
-	left: Option<Box<Interval>>,
-	right: Option<Box<Interval>>,
-	start: i32,
-	end: i32,
-}
-
-impl Interval {
-	pub fn new(start: i32, end: i32) -> Self {
-		Interval {
-			count_of_booking: 0,
-			left: None,
-			right: None,
-			start,
-			end,
-		}
-	}
-}
-
-/**
+/*
  * Your MyCalendarTwo object will be instantiated and called as such:
  * let obj = MyCalendarTwo::new();
  * let ret_1: bool = obj.book(start, end);

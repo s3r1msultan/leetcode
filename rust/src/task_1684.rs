@@ -67,7 +67,7 @@ pub fn count_consistent_strings(allowed: String, words: Vec<String>) -> i32 {
 	for word in words {
 		let mut flag = true;
 		for char in word.chars() {
-			if mask >> (char as u8 - 'a' as u8) & 1 {
+			if mask >> (char as u8 - 'a' as u8) & 1 == 0 {
 				flag = false;
 				break;
 			}

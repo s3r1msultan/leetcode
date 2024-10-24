@@ -40,7 +40,7 @@ The number of nodes in the list is in the range [1, 105].
 1 <= Node.val <= 105
 
 */
-use crate::data_structures::list::ListNode;
+/*use crate::data_structures::list::ListNode;
 
 fn delete_middle(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
 	fn traverse(first_pointer: &Option<Box<ListNode>>, second_pointer: &Option<Box<ListNode>>) -> (Option<Box<ListNode>>, Option<Box<ListNode>>) {}
@@ -50,4 +50,4 @@ fn delete_middle(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
 		pre_middle = node.next;
 	}
 	head
-}
+}*/

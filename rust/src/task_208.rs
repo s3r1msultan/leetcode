@@ -101,7 +101,7 @@ impl Trie {
 	}
 }
 
-/**
+/*
  * Your Trie object will be instantiated and called as such:
  * let obj = Trie::new();
  * obj.insert(word);

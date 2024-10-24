@@ -31,7 +31,7 @@ fn can_partition(nums: Vec<i32>) -> bool {
 	let n = nums.len();
 	let half_sum = sum as usize / 2;
 	let mut dp = vec![vec![false; half_sum + 1]; n + 1];
-	dp.iter_mut().for_each(|x| *x[0] = true);
+	dp.iter_mut().for_each(|x| x[0] = true);
 	for i in 1..=n {
 		for j in 1..=half_sum {
 			if nums[i - 1] > j as i32 {
