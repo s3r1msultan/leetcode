@@ -25,34 +25,32 @@ Constraints:
 The number of nodes in the linked list is in the range [0, 104].
 -106 <= Node.val <= 106
 
-*/
-/*use crate::data_structures::list::ListNode;
+ */
+use crate::data_structures::list::ListNode;
 
-pub fn odd_even_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-	if head.is_none() || head.clone().unwrap().next.is_none() {
-		return head;
-	}
-	let mut head = head;
-	let mut even_start: Option<Box<ListNode>> = None;
-	let mut even_tail: &mut Option<Box<ListNode>> = &mut None;
-	let mut odd_start: Option<Box<ListNode>> = None;
-	let mut odd_tail: &mut Option<Box<ListNode>> = &mut None;
-	let mut index = 0;
+pub fn odd_even_list(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+    type OptionNode = Option<Box<ListNode>>;
 
-	while let Some(node) = head {
-		if index % 2 == 0 {
-			if even_tail.is_some() {
-				even_tail.as_mut().unwrap().next = Some(node);
-				even_tail = &mut even_tail.unwrap().next;
-			} else {}
-		} else {}
+    let mut even: OptionNode = None;
+    let mut even_head = &mut even;
 
-		index += 1;
-	}
+    let mut odd: OptionNode = None;
+    let mut odd_head = &mut odd;
 
-	if even_tail.is_some() {
-		even_tail.as_mut().unwrap().next = odd_start;
-	}
+    let mut is_odd = false;
 
-	even_start
-}*/
+    while let Some(mut node) = head {
+        head = node.next.take();
+        if is_odd {
+            *odd_head = Some(node);
+            odd_head = &mut odd_head.as_mut().unwrap().next;
+        } else {
+            *even_head = Some(node);
+            even_head = &mut even_head.as_mut().unwrap().next;
+        }
+        is_odd = !is_odd;
+    }
+
+    *odd_head = even;
+    odd
+}
