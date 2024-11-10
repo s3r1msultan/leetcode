@@ -329,9 +329,6 @@ mod task_1233;
 mod task_617;
 mod task_62;
 mod task_2458;
-mod biweekly_contest_142_1;
-mod biweekly_contest_142_2;
-mod biweekly_contest_142_3;
 mod task_3330;
 mod task_1277;
 mod task_111;
@@ -365,5 +362,13 @@ mod task_2275;
 mod task_1305;
 mod task_965;
 mod task_1004;
+mod task_3133;
+mod task_2657;
+mod task_3158;
+mod task_1356;
+mod biweekly_142;
+mod biweekly_142;
+mod biweekly_143;
+mod task_3097;
 
 fn main() {}
