@@ -25,7 +25,7 @@ Constraints:
 1 <= k <= n
 
 */
-pub fn combine(n: i32, k: i32) -> Vec<Vec<i32>> {
+/*pub fn combine(n: i32, k: i32) -> Vec<Vec<i32>> {
     let k = k as usize;
     fn backtrack(n: i32, start: i32, k: usize, result: &mut Vec<Vec<i32>>, current_combination: &mut Vec<i32>) {
         if current_combination.len() == k {
@@ -42,4 +42,4 @@ pub fn combine(n: i32, k: i32) -> Vec<Vec<i32>> {
     let mut result = vec![];
     backtrack(n, 1, k, &mut result, &mut vec![]);
     result
-}
+}*/

@@ -20,7 +20,7 @@ Constraints:
 
 */
 
-    pub fn generate_parenthesis(n: i32) -> Vec<String> {
+ /*   pub fn generate_parenthesis(n: i32) -> Vec<String> {
         fn backtrack(result: &mut Vec<String>, brackets: &mut String, l: i32, r: i32, n: i32) {
             if l == n && r == n{
                 result.push(brackets.clone());
@@ -44,3 +44,4 @@ Constraints:
         backtrack(&mut result, &mut brackets, 0, 0, n);
         result
     }
+*/

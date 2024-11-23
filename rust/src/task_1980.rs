@@ -33,7 +33,7 @@ All the strings of nums are unique.
 */
 
 
-
+/*
 pub fn find_different_binary_string(nums: Vec<String>) -> String {
     use std::collections::HashSet;
 
@@ -55,4 +55,4 @@ pub fn find_different_binary_string(nums: Vec<String>) -> String {
     let mut result = String::new();
     backtrack(&mut result, &set, &mut String::new(), set.len());
     result
-}
+}*/

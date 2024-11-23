@@ -49,11 +49,11 @@ use std::cell::RefCell;
 use std::rc::Rc;
 use crate::data_structures::tree::TreeNode;
 
-pub fn tree_queries(root: Option<Rc<RefCell<TreeNode>>>, queries: Vec<i32>) -> Vec<i32> {
+/*pub fn tree_queries(root: Option<Rc<RefCell<TreeNode>>>, queries: Vec<i32>) -> Vec<i32> {
     fn find_depth(node: Option<&Rc<RefCell<TreeNode>>>, depth: i32, query: i32) -> i32 {
         if let Some(node) = node {
             let borrowed = node.borrow();
-            if borrowed.val == query {
+            if borrowed.val == query
                 return depth;
             }
 
@@ -68,4 +68,4 @@ pub fn tree_queries(root: Option<Rc<RefCell<TreeNode>>>, queries: Vec<i32>) -> V
         result.push(find_depth(root.as_ref(), 0, query));
     }
     result
-}
+}*/
