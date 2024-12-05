@@ -48,77 +48,37 @@ entrance will always be an empty cell.
 
 */
 
-fn oranges_rotting(grid: Vec<Vec<i32>>) -> i32 {
-	use std::collections::VecDeque;
-	let m = grid.len();
-	let n = grid[0].len();
-	let mut grid = grid;
+fn nearest_exit(maze: Vec<Vec<char>>, entrance: Vec<i32>) -> i32 {
+    use std::collections::VecDeque;
+    let m = maze.len();
+    let n = maze[0].len();
+    let directions = [(1, 0), (0, 1), (-1, 0), (0, -1)];
 
-	let mut queue = VecDeque::new();
-	let mut minutes = 0;
-	let mut freshes = 0;
+    let mut visited = vec![vec![false; n]; m];
+    let mut queue = VecDeque::new();
 
-	for i in 0..m {
-		for j in 0..n {
-			if grid[i][j] == 2 {
-				queue.push_back((i, j));
-			} else if grid[i][j] == 1 {
-				freshes += 1;
-			}
-		}
-	}
+    queue.push_back((0, entrance[0] as usize, entrance[1] as usize));
+    visited[entrance[0] as usize][entrance[1] as usize] = true;
 
-	if queue.is_empty() {
-		return -1;
-	}
+    while !queue.is_empty() {
+        let (steps, row, col) = queue.pop_front().unwrap();
 
-	loop {
-		let mut temp = VecDeque::new();
-		while let Some((i, j)) = queue.pop_front() {
-			if i > 1 {
-				if grid[i - 1][j] == 1 {
-					grid[i - 1][j] = 2;
-					temp.push_back((i - 1, j));
-					freshes -= 1;
-				}
-			}
+        for &(dr, dc) in &directions {
+            let new_dr = row as i32 + dr;
+            let new_dc = col as i32 + dc;
+            if new_dr < 0 || new_dc < 0 || new_dr >= m as i32 || new_dc >= n as i32 {
+                return steps;
+            }
 
-			if j > 1 {
-				if grid[i][j - 1] == 1 {
-					grid[i][j - 1] = 2;
-					temp.push_back((i, j - 1));
-					freshes -= 1;
-				}
-			}
+            let new_dr = new_dr as usize;
+            let new_dc = new_dc as usize;
 
-			if i < m - 1 {
-				if grid[i + 1][j] == 1 {
-					grid[i + 1][j] = 2;
-					temp.push_back((i + 1, j));
-					freshes -= 1;
-				}
-			}
+            if maze[new_dr][new_dc] == '.' && !visited[new_dr][new_dc] {
+                visited[new_dr][new_dc] = true;
+                queue.push_back((steps + 1, new_dr, new_dc));
+            }
+        }
+    }
 
-			if j < n - 1 {
-				if grid[i][j + 1] == 1 {
-					grid[i][j + 1] = 2;
-					temp.push_back((i, j + 1));
-					freshes -= 1;
-				}
-			}
-		}
-
-		if temp.is_empty() {
-			break;
-		} else {
-			minutes += 1;
-			queue = temp;
-		}
-	}
-
-	if freshes != 0 {
-		return -1;
-	}
-
-	minutes
+    -1
 }

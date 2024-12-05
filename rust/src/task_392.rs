@@ -26,16 +26,14 @@ s and t consist only of lowercase English letters.
 Follow up: Suppose there are lots of incoming s, say s1, s2, ..., sk where k >= 109, and you want to check one by one to see if t has its subsequence. In this scenario, how would you change your code?*/
 
 fn is_subsequence(s: String, t: String) -> bool {
-	let t_chars = t.chars();
-	let s_chars = s.chars().collect::<Vec<char>>();
-	let mut first = 0;
-	for second in t_chars {
-		if let Some(&first_char) = s_chars.get(first) {
-			if second == first_char {
-				first += 1;
-			}
-		}
-	}
+    let s_chars = s.as_bytes();
+    let t_chars = t.as_bytes();
+    let mut j = 0;
+    for i in 0..t_chars.len() {
+        if j < s_chars.len() && s_chars[j] == t_chars[i] {
+            j += 1;
+        }
+    }
 
-	first == s.len()
+    j == s.len()
 }
