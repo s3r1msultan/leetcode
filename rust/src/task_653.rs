@@ -22,25 +22,16 @@ root is guaranteed to be a valid binary search tree.
 -105 <= k <= 105
 
 */
-use crate::data_structures::tree::TreeNode;
-use std::cell::RefCell;
-use std::rc::Rc;
-
-pub fn find_target(root: Option<Rc<RefCell<TreeNode>>>, k: i32) -> bool {
-    let mut set = std::collections::HashSet::new();
-    let mut stack = vec![root];
-    while let Some(node) = stack.pop() {
-        if let Some(node) = node {
-            let borrowed = node.borrow();
-            let value = borrowed.val;
-            if set.contains(&(k - value)) {
-                return true;
-            } else {
-                set.insert(value);
-            }
-            stack.push(borrowed.left.clone());
-            stack.push(borrowed.right.clone());
-        }
-    }
-    false
-}
+// use std::cell::RefCell;
+// use std::rc::Rc;
+// use crate::data_structures::tree::TreeNode;
+//
+// pub fn find_target(root: Option<Rc<RefCell<TreeNode>>>, k: i32) -> bool {
+//     let mut set = std::collections::HashSet::new();
+//             let borrowed = node.borrow();
+//                 return true;
+//             }
+//         }
+//     }
+//     false
+// }

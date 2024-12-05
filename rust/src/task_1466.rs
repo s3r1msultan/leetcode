@@ -1,4 +1,24 @@
+<<<<<<< HEAD
 /*There are n cities numbered from 0 to n - 1 and n - 1 roads such that there is only one way to travel between two different cities (this network form a tree). Last year, The ministry of transport decided to orient the roads in one direction because they are too narrow.
+=======
+/*Editorial
+Editorial
+Solutions
+Solutions
+Submissions
+Submissions
+Code
+Testcase
+Test Result
+Test Result
+1466. Reorder Routes to Make All Paths Lead to the City Zero
+Medium
+Topics
+Companies
+Hint
+
+There are n cities numbered from 0 to n - 1 and n - 1 roads such that there is only one way to travel between two different cities (this network form a tree). Last year, The ministry of transport decided to orient the roads in one direction because they are too narrow.
+>>>>>>> 2276d2c53b5e5f30758ccd90b506909ec90665d7
 
 Roads are represented by connections where connections[i] = [ai, bi] represents a road from city ai to city bi.
 
@@ -40,6 +60,7 @@ ai != bi
 */
 
 pub fn min_reorder(n: i32, connections: Vec<Vec<i32>>) -> i32 {
+<<<<<<< HEAD
     let n = n as usize;
     let mut adj = vec![vec![]; n];
 
@@ -65,6 +86,14 @@ pub fn min_reorder(n: i32, connections: Vec<Vec<i32>>) -> i32 {
             }
             if is_forward { count += 1; }
             stack.push(n);
+=======
+    let mut count = 0;
+    let mut stack = vec![];
+    let mut visited = vec![false; n as usize];
+    for i in 0..n {
+        if visited[i] {
+            continue;
+>>>>>>> 2276d2c53b5e5f30758ccd90b506909ec90665d7
         }
     }
 

@@ -32,8 +32,21 @@ p != q
 p and q will exist in the tree.
 
 */
+<<<<<<< HEAD
 use crate::data_structures::tree::TreeNode;
 use std::cell::RefCell;
 use std::rc::Rc;
 
 pub fn lowest_common_ancestor(root: Option<Rc<RefCell<TreeNode>>>, p: Option<Rc<RefCell<TreeNode>>>, q: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {}
+=======
+
+use std::cell::RefCell;
+use std::rc::Rc;
+use crate::data_structures::tree::TreeNode;
+
+pub fn lowest_common_ancestor(root: Option<Rc<RefCell<TreeNode>>>, p: Option<Rc<RefCell<TreeNode>>>, q: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
+    fn dfs() {
+        
+    }
+}
+>>>>>>> 2276d2c53b5e5f30758ccd90b506909ec90665d7
