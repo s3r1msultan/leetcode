@@ -33,3 +33,31 @@ n == mat[i].length
 
     }
 }*/
+
+pub fn matrix_block_sum(mat: Vec<Vec<i32>>, k: i32) -> Vec<Vec<i32>> {
+    let m = mat.len();
+    let n = mat[0].len();
+    let directions = [(0, 0), (1, 0), (0, 1), (-1, 0), (0, -1), (1, 1), (-1, -1), (1, -1), (-1, 1)];
+    let mut prefix_sum = vec![vec![0; n]; m];
+    for i in 0..m {
+        for j in 0..n {
+            prefix_sum[i][j] = mat[i][j];
+            for &(dx, dy) in &directions {
+                let nx = j as i32 + dx;
+                let ny = i as i32 + dy;
+                if nx < 0 || nx >= n as i32 || ny < 0 || ny >= m as i32 {
+                    continue;
+                }
+                let nx = nx as usize;
+                let ny = ny as usize;
+                prefix_sum[i][j] += prefix_sum[ny][nx];
+            }
+        }
+    }
+
+    println!("{:?}", prefix_sum);
+
+    let mut result = vec![];
+
+    result
+}
