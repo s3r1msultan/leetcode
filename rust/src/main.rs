@@ -335,5 +335,11 @@ mod task_1314;
 mod task_3028;
 mod task_2640;
 mod weekly_contest_427;
+mod task_2981;
+mod task_2779;
+mod biweekly_contest_145;
+mod task_2558;
+mod task_1962;
+mod task_1637;
 
 fn main() {}
