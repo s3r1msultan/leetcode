@@ -341,5 +341,8 @@ mod biweekly_contest_145;
 mod task_2558;
 mod task_1962;
 mod task_1637;
+mod task_1387;
+mod task_3264;
+mod task_2593;
 
 fn main() {}
