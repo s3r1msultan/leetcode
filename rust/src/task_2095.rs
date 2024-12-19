@@ -44,21 +44,24 @@ use crate::data_structures::list::ListNode;
 
 fn delete_middle(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
     let mut head = head;
-    let mut first = &mut head;
-    let mut second = &head.as_ref().unwrap().next.clone();
-
-    while let Some(ref second_next) = second {
-        if second_next.next.is_some() {
-            first = &mut first.as_mut().unwrap().next;
-            second = &second_next.next.as_ref().unwrap().next;
-        } else {
-            break;
-        }
+    let mut list_node = &head;
+    let mut len = 0;
+    while let Some(node) = list_node {
+        len += 1;
+        list_node = &node.next;
     }
 
+    len = 0;
+    let mid = len / 2;
 
-    if let Some(mut first) = first {
-        first = first.next?;
+    let mut list = &mut head;
+    while let Some(node) = list {
+        if len == mid - 1 {
+            node.next = node.next.as_ref().unwrap().next;
+            break;
+        }
+        list = &mut node.next;
+        len += 1;
     }
 
     head
