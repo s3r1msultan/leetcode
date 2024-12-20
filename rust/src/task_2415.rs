@@ -47,7 +47,7 @@ use crate::data_structures::tree::TreeNode;
 use std::cell::RefCell;
 use std::rc::Rc;
 
-pub fn reverse_odd_levels(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
+/*pub fn reverse_odd_levels(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
     if root.is_none() {
         return None;
     }
@@ -87,4 +87,39 @@ pub fn reverse_odd_levels(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefC
     }
 
     Some(root)
+}*/
+
+
+pub fn reverse_odd_levels(mut root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
+    let mut queue = std::collections::VecDeque::new();
+    queue.push_back(root.as_ref().unwrap().clone());
+    let mut is_odd = false;
+    while !queue.is_empty() {
+        let n = queue.len();
+        let mut nodes = vec![];
+        for _ in 0..n {
+            let node = queue.pop_front().unwrap();
+            nodes.push(node.clone());
+            let borrowed = node.borrow();
+            if let Some(left) = borrowed.left.as_ref() {
+                queue.push_back(left.clone());
+            }
+            if let Some(right) = borrowed.right.as_ref() {
+                queue.push_back(right.clone());
+            }
+        }
+
+        if is_odd {
+            for i in 0..n / 2 {
+                let mut left = nodes[i].borrow_mut();
+                let mut right = nodes[n - i - 1].borrow_mut();
+                std::mem::swap(&mut left.val, &mut right.val);
+            }
+        }
+
+        is_odd = !is_odd;
+    }
+
+    root
 }
+
