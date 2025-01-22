@@ -22,34 +22,32 @@
 // 0 <= height[i] <= 105
 //
 
-
 pub fn trap(height: Vec<i32>) -> i32 {
     let mut stack = vec![];
     let mut res = 0;
     for (index, &val) in height.iter().enumerate() {
         while !stack.is_empty() && val > height[*stack.last().unwrap()] {
-            let top = stack.pop().unwrap();
+            let popped_index = stack.pop().unwrap();
             if stack.is_empty() {
                 break;
             }
 
             let distance = index - stack.last().unwrap() - 1;
-            let min_height = std::cmp::min(height[*stack.last().unwrap()], val) - height[top];
-            res += distance as i32 * min_height;
+            let min_height = val.min(height[stack.last().unwrap()]) - height[popped_index];
+            res += min_height * distance as i32;
         }
         stack.push(index)
     }
-    res as i32
+    res
 }
 
 #[cfg(test)]
-
 #[test]
 
 fn test_trap() {
-    let height = vec![0,1,0,2,1,0,1,3,2,1,2,1];
+    let height = vec![0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1];
     assert_eq!(trap(height), 6);
 
-    let height = vec![4,2,0,3,2,5];
+    let height = vec![4, 2, 0, 3, 2, 5];
     assert_eq!(trap(height), 9)
 }

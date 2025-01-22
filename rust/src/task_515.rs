@@ -21,29 +21,7 @@ The number of nodes in the tree will be in the range [0, 104].
 
 */
 
-use crate::data_structures::tree::TreeNode;
-use std::cell::RefCell;
-// Definition for a binary tree node.
-// #[derive(Debug, PartialEq, Eq)]
-// pub struct TreeNode {
-//   pub val: i32,
-//   pub left: Option<Rc<RefCell<TreeNode>>>,
-//   pub right: Option<Rc<RefCell<TreeNode>>>,
-// }
-//
-// impl TreeNode {
-//   #[inline]
-//   pub fn new(val: i32) -> Self {
-//     TreeNode {
-//       val,
-//       left: None,
-//       right: None
-//     }
-//   }
-// }
-use std::rc::Rc;
-
-pub fn largest_values(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
+/*pub fn largest_values(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
     let mut result = vec![];
 
     let mut queue = std::collections::VecDeque::new();
@@ -62,6 +40,37 @@ pub fn largest_values(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
 
             if let Some(right) = borrowed.right.as_ref() {
                 queue.push_back(right);
+            }
+        }
+        result.push(max);
+    }
+
+    result
+}*/
+use crate::data_structures::tree::TreeNode;
+use std::cell::RefCell;
+use std::rc::Rc;
+
+pub fn largest_values(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
+    let mut result = vec![];
+
+    let mut queue = std::collections::VecDeque::new();
+    queue.push_back(root.unwrap());
+
+    while !queue.is_empty() {
+        let n = queue.len();
+        let mut max = i32::MIN;
+        for _ in 0..n {
+            let node = queue.pop_front().unwrap();
+            let borrowed = node.borrow();
+            max = max.max(borrowed.val);
+
+            if let Some(left) = borrowed.left.as_ref() {
+                queue.push_back(left.clone());
+            }
+
+            if let Some(right) = borrowed.right.as_ref() {
+                queue.push_back(right.clone());
             }
         }
         result.push(max);

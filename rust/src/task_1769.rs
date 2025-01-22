@@ -32,7 +32,7 @@ boxes[i] is either '0' or '1'.
 
 */
 
-pub fn min_operations(boxes: String) -> Vec<i32> {
+/*pub fn min_operations(boxes: String) -> Vec<i32> {
     let boxes = boxes.chars().collect::<Vec<char>>();
     let n = boxes.len();
     let mut prefix_sum = vec![0; n];
@@ -61,4 +61,58 @@ pub fn min_operations(boxes: String) -> Vec<i32> {
     }
 
     prefix_sum
+}*/
+
+pub fn min_operations(boxes: String) -> Vec<i32> {
+    let n = boxes.len();
+    let bytes = boxes.as_bytes();
+    let mut result = vec![0; n];
+    let mut balls_to_left = 0;
+    let mut moves_to_left = 0;
+    let mut balls_to_right = 0;
+    let mut moves_to_right = 0;
+    for i in 0..n {
+        result[i] += moves_to_left;
+        balls_to_left += (bytes[i] - b'0') as i32;
+        moves_to_left += balls_to_left;
+
+        let j = n - i - 1;
+        result[j] += moves_to_right;
+        balls_to_right += (bytes[j] - b'0') as i32;
+        moves_to_right += balls_to_right;
+    }
+    result
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -48,41 +48,48 @@ All the values of the tree are unique.
 use crate::data_structures::tree::TreeNode;
 use std::cell::RefCell;
 use std::rc::Rc;
-//
-// pub fn minimum_operations(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
-//     if root.is_none() {
-//         return 0;
-//     }
-//     let mut count = 0;
-//     let mut queue = std::collections::VecDeque::new();
-//     queue.push_back(root.unwrap());
-//
-//     while !queue.is_empty() {
-//         let n = queue.len();
-//         let mut arr = vec![];
-//         for _ in 0..n {
-//             let node = queue.pop_front().unwrap();
-//             let borrowed = node.borrow();
-//             arr.push(borrowed.val);
-//
-//             if let Some(left) = borrowed.left.as_ref() {
-//                 queue.push_back(left.clone());
-//             }
-//
-//             if let Some(right) = borrowed.right.as_ref() {
-//                 queue.push_back(right.clone());
-//             }
-//         }
-//         let mut sorted_arr = arr.clone();
-//         sorted_arr.sort();
-//         let mut curr_count = 0;
-//         for i in 0..n {
-//             if arr[i] != sorted_arr[i] {
-//                 curr_count += 1;
-//             }
-//         }
-//         count += curr_count / 2 + curr_count % 2;
-//     }
-//
-//     count
-// }
+
+pub fn minimum_operations(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
+    if root.is_none() {
+        return 0;
+    }
+    let mut count = 0;
+
+    let mut queue = std::collections::VecDeque::new();
+    queue.push_back(root.unwrap());
+
+    while !queue.is_empty() {
+        let n = queue.len();
+        let mut unsorted = vec![];
+        let mut map = std::collections::HashMap::new();
+        for i in 0..n {
+            let node = queue.pop_front().unwrap();
+            let borrowed = node.borrow();
+            unsorted.push(borrowed.val);
+            map.insert(borrowed.val, i);
+
+            if let Some(left) = borrowed.left.as_ref() {
+                queue.push_back(left.clone());
+            }
+
+            if let Some(right) = borrowed.right.as_ref() {
+                queue.push_back(right.clone());
+            }
+        }
+
+        let mut sorted = unsorted.clone();
+        sorted.sort_unstable();
+
+        for i in 0..n {
+            if unsorted[i] != sorted[i] {
+                let j = *map.get(&sorted[i]).unwrap();
+                unsorted.swap(i, j);
+                *map.entry(unsorted[i]).or_insert(i) = i;
+                *map.entry(unsorted[j]).or_insert(j) = j;
+                count += 1;
+            }
+        }
+    }
+
+    count
+}

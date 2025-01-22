@@ -52,49 +52,24 @@ grid[i][j] is either 0 or 1.
 */
 
 fn ones_minus_zeros(grid: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
-	let n = grid.len();
-	let m = grid[0].len();
-	let mut diff = vec![vec![0; m]; n];
-	let mut diff_rows = vec![0; n];
-	let mut diff_cols = vec![0; m];
-	let mut ones_row = 0;
-	let mut zeros_row = 0;
-	let mut ones_col = 0;
-	let mut zeros_col = 0;
-	for i in 0..n {
-		for j in 0..m {
-			if grid[i][j] == 0 {
-				zeros_row += 1;
-			} else {
-				ones_row += 1;
-			}
-		}
-		diff_rows[i] += ones_row;
-		diff_rows[i] -= zeros_row;
-		ones_row = 0;
-		zeros_row = 0;
-	}
+    let n = grid.len();
+    let m = grid[0].len();
+    let mut rows = vec![0i32; n];
+    let mut cols = vec![0i32; m];
+    for i in 0..n {
+        for j in 0..m {
+            if grid[i][j] == 1 {
+                rows[i] += 1;
+                cols[j] += 1;
+            }
+        }
+    }
 
-	for j in 0..m {
-		for i in 0..n {
-			if grid[i][j] == 0 {
-				zeros_col += 1;
-			} else {
-				ones_col += 1;
-			}
-		}
-
-		diff_cols[j] += ones_col;
-		diff_cols[j] -= zeros_col;
-		ones_col = 0;
-		zeros_col = 0;
-	}
-
-	for i in 0..n {
-		for j in 0..m {
-			diff[i][j] = diff_rows[i] + diff_cols[j];
-		}
-	}
-
-	diff
+    let mut diff = vec![vec![0; m]; n];
+    for i in 0..n {
+        for j in 0..m {
+            diff[i][j] = rows[i] + cols[j] - (m as i32 - rows[i]) - (n as i32 - cols[j]);
+        }
+    }
+    diff
 }

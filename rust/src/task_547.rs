@@ -29,33 +29,75 @@ isConnected[i][j] is 1 or 0.
 isConnected[i][i] == 1
 isConnected[i][j] == isConnected[j][i]
 
-*/
-// DFS Solution
-// fn find_circle_num(is_connected: Vec<Vec<i32>>) -> i32 {
-// 	for row in is_connected.iter() {
-// 		println!("{row:?}");
-// 	}
-// 	fn dfs(visited_nodes: &mut Vec<bool>, node: usize, is_connected: &Vec<Vec<i32>>) {
-// 		let n = is_connected.len();
-// 		visited_nodes[node] = true;
-// 		for i in 0..node {
-// 			if is_connected[node][i] == 1 && !visited_nodes[i] {
-// 				dfs(visited_nodes, i, is_connected);
-// 			}
-// 		}
-// 	}
-// 	let n = is_connected.len();
-// 	let mut visited_nodes = vec![false; n];
-// 	let mut count = 0;
-// 	for i in 0..n {
-// 		if !visited_nodes[i] {
-// 			count += 1;
-// 			dfs(&mut visited_nodes, i, &is_connected);
-// 		}
-// 	}
-// 	println!();
-// 	for row in is_connected.iter() {
-// 		println!("{row:?}");
-// 	}
-// 	count
-// }
+ */
+
+pub fn find_circle_num(is_connected: Vec<Vec<i32>>) -> i32 {
+    use std::cmp::Ordering;
+
+    struct UnionSet {
+        representatives: Vec<i32>,
+        rank: Vec<i32>,
+        count: i32,
+    }
+
+    impl UnionSet {
+        fn new(n: usize) -> Self {
+            Self {
+                representatives: (0..n as i32).collect(),
+                rank: vec![1; n],
+                count: n as i32,
+            }
+        }
+
+        fn find(&mut self, x: i32) -> i32 {
+            let parent = self.representatives[x as usize];
+            if parent == x {
+                return x;
+            }
+            let root = self.find(parent);
+            self.representatives[x as usize] = root;
+
+            root
+        }
+
+        fn union(&mut self, a: i32, b: i32) {
+            let root_a = self.find(a) as usize;
+            let root_b = self.find(b) as usize;
+
+            if root_a == root_b {
+                return;
+            }
+            self.count -= 1;
+
+            match self.rank[root_a].cmp(&self.rank[root_b]) {
+                Ordering::Less => {
+                    self.representatives[root_a] = root_b as i32;
+                }
+                Ordering::Equal => {
+                    self.representatives[root_b] = root_a as i32;
+                    self.rank[root_a] += 1;
+                }
+                Ordering::Greater => {
+                    self.representatives[root_b] = root_a as i32
+                }
+            }
+        }
+
+        fn get_count(&self) -> i32 {
+            self.count
+        }
+    }
+
+    let n = is_connected.len();
+    let mut union_set = UnionSet::new(n);
+    for i in 0..n {
+        for j in i + 1..n {
+            if is_connected[i][j] == 1 {
+                union_set.union(i as i32, j as i32);
+            }
+        }
+    }
+
+    union_set.get_count()
+}
+
