@@ -453,5 +453,16 @@ mod task_1319;
 mod task_802;
 mod task_1313;
 mod task_128;
+mod task_2127;
+mod task_1462;
+mod task_2828;
+mod task_684;
+mod task_994;
+mod task_12;
+mod task_785;
+mod task_2493;
+mod task_130;
+mod task_190;
+mod task_2685;
 
 fn main() {}

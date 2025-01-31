@@ -103,12 +103,16 @@ pub fn largest_island(grid: Vec<Vec<i32>>) -> i32 {
                     let ni = i as i32 + di;
                     let nj = j as i32 + dj;
 
-                    if !is_valid(ni, nj, n as i32, m as i32) || grid[ni][nj] == 0 {
+                    if !is_valid(ni, nj, n as i32, m as i32) {
                         continue;
                     }
 
                     let ni = ni as usize;
                     let nj = nj as usize;
+
+                    if grid[ni][nj] == 0 {
+                        continue;
+                    }
 
                     let neighbour_index = ni * m + nj;
 
@@ -130,12 +134,16 @@ pub fn largest_island(grid: Vec<Vec<i32>>) -> i32 {
             let ni = i as i32 + di;
             let nj = j as i32 + dj;
 
-            if !is_valid(ni, nj, n as i32, m as i32) || grid[ni][nj] == 0 {
+            if !is_valid(ni, nj, n as i32, m as i32) {
                 continue;
             }
 
             let ni = ni as usize;
             let nj = nj as usize;
+
+            if grid[ni][nj] == 0 {
+                continue;
+            }
 
             let neighbour_index = ni * m + nj;
             let root = disjoint_set.find(neighbour_index);
