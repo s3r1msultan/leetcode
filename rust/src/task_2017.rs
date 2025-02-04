@@ -43,15 +43,43 @@ n == grid[r].length
 
 */
 
-pub fn grid_game(grid: Vec<Vec<i32>>) -> i64 {
-    let n = grid.len();
-    let mut min_sum = i64::MAX;
-    let mut first_row_sum = grid[0].iter().fold(0, |acc, &curr| acc + curr as i64);
+
+/*pub fn grid_game(grid: Vec<Vec<i32>>) -> i64 {
+    let n = grid[0].len();
+
+    let mut first_row_sum = grid[0].iter().fold(0i64, |acc, &curr| acc + curr as i64);
     let mut second_row_sum = 0;
+
+    let mut min_sum = i64::MAX;
+
     for i in 0..n {
         first_row_sum -= grid[0][i] as i64;
+
         min_sum = min_sum.min(first_row_sum.max(second_row_sum));
+
         second_row_sum += grid[1][i] as i64;
     }
+
+    min_sum
+}*/
+
+pub fn grid_game(grid: Vec<Vec<i32>>) -> i64 {
+    let n = grid[0].len();
+
+    let mut first_row = vec![0; n + 1];
+    let mut second_row = vec![0; n + 1];
+
+    for i in 0..n {
+        first_row[i+1] = first_row[i] + grid[0][i] as i64;
+        second_row[i+1] = second_row[i] + grid[1][i] as i64;
+    }
+
+    let mut min_sum = i64::MAX;
+
+    for i in 0..n {
+
+        min_sum = min_sum.min((first_row[n] - first_row[i+1]).max(second_row[i+1]));
+    }
+
     min_sum
 }

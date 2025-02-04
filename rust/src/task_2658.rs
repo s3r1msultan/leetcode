@@ -36,26 +36,22 @@ n == grid[i].length
 0 <= grid[i][j] <= 10
 
 */
-use std::cmp::Ordering;
-
 struct DS {
     representatives: Vec<usize>,
-    fishes: Vec<i32>,
-    ranks: Vec<i32>,
+    size: Vec<i32>
 }
 
 impl DS {
     fn new(n: usize) -> Self {
         Self {
             representatives: (0..n).collect(),
-            fishes: vec![0; n],
-            ranks: vec![1; n],
+            size: vec![0; n],
         }
     }
 
     fn find(&mut self, x: usize) -> usize {
         let parent = self.representatives[x];
-        if parent == x {
+        if x == parent {
             return x;
         }
         let root = self.find(parent);
@@ -71,70 +67,61 @@ impl DS {
             return;
         }
 
-        match self.ranks[root_a].cmp(&self.ranks[root_b]) {
-            Ordering::Less => {
-                self.representatives[root_a] = root_b;
-                self.fishes[root_a] += self.fishes[root_b];
-            }
-            Ordering::Equal => {
-                self.representatives[root_b] = root_a;
-                self.ranks[root_a] += 1;
-                self.fishes[root_a] += self.fishes[root_b];
-            }
-            Ordering::Greater => {
-                self.representatives[root_b] = root_a;
-                self.fishes[root_b] += self.fishes[root_a];
-            }
+        if self.size[root_a] >= self.size[root_b] {
+            self.representatives[root_b] = root_a;
+            self.size[root_a] += self.size[root_b];
+        } else {
+            self.representatives[root_a] = root_b;
+            self.size[root_b] += self.size[root_a];
         }
+    }
+
+    fn get_max_size(&self) -> i32 {
+        self.size.iter().max().unwrap().clone()
     }
 }
 
-fn is_valid(i: i32, j: i32, n: i32, m: i32) -> bool {
-    i >= 0 && j >= 0 && i < n && j < m
-}
+
 
 pub fn find_max_fish(grid: Vec<Vec<i32>>) -> i32 {
     let n = grid.len();
     let m = grid[0].len();
-    let directions = [(-1, 0), (0, -1)];
-    let mut set = DS::new(n * m);
+    let directions = [(0, 1), (1, 0), (-1,0), (0, -1)];
+    fn is_valid(i: i32, j: i32, n: i32, m: i32) -> bool {
+        i >= 0 && j >= 0 && i < n && j < m
+    }
 
+    let mut set = DS::new(n*m);
     for i in 0..n {
         for j in 0..m {
-            if grid[i][j] == 0 {
-                continue;
-            }
-            let curr_index = i * m + j;
-            if set.fishes[curr_index] == 0 {
-                set.fishes[curr_index] = grid[i][j];
-            }
-            for &(di, dj) in &directions {
-                let ni = i as i32 + di;
-                let nj = j as i32 + dj;
-
-                if !is_valid(ni, nj, n as i32, m as i32) {
-                    continue;
+            if grid[i][j] != 0 {
+                let index = i * m + j;
+                if set.size[index] == 0 {
+                    set.size[index] = grid[i][j];
                 }
 
-                let ni = ni as usize;
-                let nj = nj as usize;
+                for &(di, dj) in &directions {
+                    let ni = i as i32 + di;
+                    let nj = j as i32 + dj;
 
-                if grid[ni][nj] == 0 {
-                    continue;
-                }
+                    if !is_valid(ni, nj, n as i32, m as i32) {
+                        continue;
+                    }
 
-                let next_index = ni * m + nj;
-                if set.fishes[next_index] == 0 {
-                    set.fishes[next_index] = grid[ni][nj];
+                    let ni = ni as usize;
+                    let nj = nj as usize;
+
+
+                    if grid[ni][nj] != 0 {
+                        let nindex = ni * m + nj;
+                        if set.size[nindex] == 0 {
+                            set.size[nindex] = grid[ni][nj];
+                        }
+                        set.union(index, nindex);
+                    }
                 }
-                set.union(curr_index, next_index);
             }
         }
     }
-
-    let mut max = 0;
-    for i in 0..n * m {
-        max = max.max(set.fishes[i]);
-    }
-    max
+    set.get_max_size()
 }

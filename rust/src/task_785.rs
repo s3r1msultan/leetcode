@@ -1,4 +1,5 @@
-/*There is an undirected graph with n nodes, where each node is numbered between 0 and n - 1. You are given a 2D array graph, where graph[u] is an array of nodes that node u is adjacent to. More formally, for each v in graph[u], there is an undirected edge between node u and node v. The graph has the following properties:
+/*
+There is an undirected graph with n nodes, where each node is numbered between 0 and n - 1. You are given a 2D array graph, where graph[u] is an array of nodes that node u is adjacent to. More formally, for each v in graph[u], there is an undirected edge between node u and node v. The graph has the following properties:
 
 There are no self-edges (graph[u] does not contain u).
 There are no parallel edges (graph[u] does not contain duplicate values).
@@ -36,6 +37,8 @@ All the values of graph[u] are unique.
 If graph[u] contains v, then graph[v] contains u.
 
 */
+
+/*
 use std::cmp::Ordering;
 
 struct DS {
@@ -98,6 +101,50 @@ pub fn is_bipartite(graph: Vec<Vec<i32>>) -> bool {
                 return false;
             }
             set.union(graph[i][0] as usize, graph[i][j] as usize);
+        }
+    }
+
+    true
+}
+*/
+
+pub fn is_bipartite(graph: Vec<Vec<i32>>) -> bool {
+    use std::collections::{HashSet, VecDeque};
+    let n = graph.len();
+    let mut first_set = HashSet::new();
+    let mut second_set = HashSet::new();
+
+    let mut queue = VecDeque::new();
+    let mut visited = vec![false; n];
+
+    for i in 0..n {
+        if visited[i] {
+            continue;
+        }
+
+        queue.push_back((i, true));
+
+        while let Some((i, is_first_set)) = queue.pop_front() {
+
+            if is_first_set  {
+                if second_set.contains(&i) {
+                    return false;
+                }
+                first_set.insert(i);
+            } else {
+                if first_set.contains(&i) {
+                    return false;
+                }
+                second_set.insert(i);
+            }
+
+            for &j in &graph[i] {
+                if visited[i] {
+                    continue;
+                }
+                visited[i] = true;
+                queue.push_back((j as usize, !is_first_set));
+            }
         }
     }
 
