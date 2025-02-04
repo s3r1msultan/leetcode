@@ -28,41 +28,48 @@ There is at least one 0 in mat.
 */
 
 fn update_matrix(mat: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
-	use std::collections::VecDeque;
-	let mut queue = VecDeque::new();
-	let m = mat.len();
-	let n = mat[0].len();
-	let mut result = vec![vec![0; n]; m];
+    use std::collections::VecDeque;
+    let mut queue = VecDeque::new();
+    let n = mat.len();
+    let m = mat[0].len();
+    let directions = [(0, 1), (1, 0), (0, -1), (-1, 0)];
+    fn is_valid(i: i32, j: i32, n: i32, m: i32) -> bool {
+        i >= 0 && j >= 0 && i < n && j < m
+    }
 
-	for i in 0..m {
-		for j in 0..n {
-			if mat[i][j] == 0 {
-				queue.push_back((i, j));
-			} else {
-				result[i][j] = i32::MAX;
-			}
-		}
-	}
+    let mut result = vec![vec![i32::MAX; m]; n];
 
-	let directions = [(0, 1), (1, 0), (0, -1), (-1, 0)];
+    for i in 0..n {
+        for j in 0..m {
+            if mat[i][j] == 0 {
+                result[i][j] = 0;
+                queue.push_back((i, j));
+            }
+        }
+    }
 
-	while let Some((i, j)) = queue.pop_front() {
-		for &(dx, dy) in &directions {
-			let nx = i as isize + dx;
-			let ny = j as isize + dy;
 
-			if nx >= 0 && ny >= 0 && nx < m as isize && ny < n as isize {
-				let nx = nx as usize;
-				let ny = ny as usize;
-				if result[nx][ny] > result[i][j] + 1 {
-					result[nx][ny] = result[i][j] + 1;
-					queue.push_back((nx, ny));
-				}
-			}
-		}
-	}
+    while let Some((i, j)) = queue.pop_front() {
+        let val = mat[i][j];
+        for &(di, dj) in &directions {
+            let ni = i as i32 + di;
+            let nj = j as i32 + dj;
 
-	result
+            if !is_valid(ni, nj, n as i32, m as i32) {
+                continue;
+            }
+
+            let ni = ni as usize;
+            let nj = nj as usize;
+
+            if val + 1 < result[ni][nj] {
+                result[ni][nj] = val + 1;
+                queue.push_back((ni, nj));
+            }
+        }
+    }
+
+    result
 }
 
 

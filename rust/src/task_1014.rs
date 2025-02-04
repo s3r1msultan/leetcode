@@ -26,7 +26,7 @@ Constraints:
 
 */
 
-fn max_score_sightseeing_pair(values: Vec<i32>) -> i32 {
+/*fn max_score_sightseeing_pair(values: Vec<i32>) -> i32 {
 	let mut start: (i32, i32) = (0, values[0]);
 	let mut max_score = 0;
 	for i in 1..values.len() {
@@ -39,4 +39,49 @@ fn max_score_sightseeing_pair(values: Vec<i32>) -> i32 {
 		}
 	}
 	max_score
+}*/
+
+pub fn max_score_sightseeing_pair(values: Vec<i32>) -> i32 {
+    let mut max_score = 0;
+
+    let mut start = (0, values[0]);
+
+    for i in 1..values.len() {
+        let score = start.0 + start.1 + values[i] - i as i32;
+        max_score = max_score.max(score);
+        if start.0 + start.1 < i as i32 + values[i] {
+            start = (i as i32, values[i]);
+        }
+    }
+
+    max_score
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

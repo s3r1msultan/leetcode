@@ -32,9 +32,7 @@
 // grid[i][j] is 0 or 1.
 // There is exactly one island in grid.
 
-
-
-pub fn island_perimeter(grid: Vec<Vec<i32>>) -> i32 {
+/*pub fn island_perimeter(grid: Vec<Vec<i32>>) -> i32 {
     if grid.is_empty() || grid[0].is_empty() {
         return 0;
     }
@@ -55,14 +53,40 @@ pub fn island_perimeter(grid: Vec<Vec<i32>>) -> i32 {
 
     res
 }
+*/
 
+pub fn island_perimeter(grid: Vec<Vec<i32>>) -> i32 {
+    let n = grid.len();
+    let m = grid[0].len();
+    let directions = [(0, 1), (1, 0), (0, -1), (-1, 0)];
+    fn is_valid(i: i32, j: i32, n: i32, m: i32) -> bool {
+        i >= 0 && j >= 0 && i < n && j < m
+    }
+
+    let mut count = 0;
+    for i in 0..n {
+        for j in 0..m {
+            if grid[i][j] == 1 {
+                for &(di, dj) in &directions {
+                    let ni = i as i32 + di;
+                    let nj = j as i32 + dj;
+
+                    if !is_valid(ni, nj, n as i32, m as i32) || grid[ni][nj] == 0 {
+                        count += 1;
+                        continue;
+                    }
+                }
+            }
+        }
+    }
+    count
+}
 
 #[cfg(test)]
-
 #[test]
 
 fn test_island_perimeter() {
-    let grid = vec![vec![0,1,0,0],vec![1,1,1,0],vec![0,1,0,0],vec![1,1,0,0]];
+    let grid = vec![vec![0, 1, 0, 0], vec![1, 1, 1, 0], vec![0, 1, 0, 0], vec![1, 1, 0, 0]];
     assert_eq!(island_perimeter(grid), 16);
 
     let grid = vec![vec![1]];

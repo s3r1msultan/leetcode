@@ -30,7 +30,6 @@ arr.length == m * n
 1 <= m, n <= 105
 1 <= m * n <= 105
 1 <= arr[i], mat[r][c] <= m * n
-All the integers of arr are unique.*/
 
 pub fn first_complete_index(arr: Vec<i32>, mat: Vec<Vec<i32>>) -> i32 {
     

@@ -38,6 +38,76 @@ If graph[u] contains v, then graph[v] contains u.
 
 */
 
+/*
+use std::cmp::Ordering;
+
+struct DS {
+    representatives: Vec<usize>,
+    ranks: Vec<i32>,
+}
+
+impl DS {
+    fn new(n: usize) -> Self {
+        Self {
+            representatives: (0..n).collect(),
+            ranks: vec![1; n],
+        }
+    }
+
+    fn find(&mut self, x: usize) -> usize {
+        let parent = self.representatives[x];
+        if parent == x {
+            return x;
+        }
+        let root = self.find(parent);
+        self.representatives[x] = root;
+        root
+    }
+
+    fn union(&mut self, a: usize, b: usize) {
+        let root_a = self.find(a);
+        let root_b = self.find(b);
+
+        if root_a == root_b {
+            return;
+        }
+
+        match self.ranks[root_a].cmp(&self.ranks[root_b]) {
+            Ordering::Less => {
+                self.representatives[root_a] = root_b;
+            }
+            Ordering::Equal => {
+                self.representatives[root_b] = root_a;
+                self.ranks[root_a] += 1;
+            }
+            Ordering::Greater => {
+                self.representatives[root_b] = root_a;
+            }
+        }
+    }
+
+    fn connected(&mut self, a: usize, b: usize) -> bool {
+        self.find(a) == self.find(b)
+    }
+}
+
+pub fn is_bipartite(graph: Vec<Vec<i32>>) -> bool {
+    let n = graph.len();
+    let mut set = DS::new(n);
+
+    for i in 0..n {
+        for j in 0..graph[i].len() {
+            if set.connected(i, graph[i][j] as usize) {
+                return false;
+            }
+            set.union(graph[i][0] as usize, graph[i][j] as usize);
+        }
+    }
+
+    true
+}
+*/
+
 pub fn is_bipartite(graph: Vec<Vec<i32>>) -> bool {
     use std::collections::{HashSet, VecDeque};
     let n = graph.len();
@@ -56,25 +126,25 @@ pub fn is_bipartite(graph: Vec<Vec<i32>>) -> bool {
 
         while let Some((i, is_first_set)) = queue.pop_front() {
 
-                if is_first_set  {
-                    if second_set.contains(&i) {
-                        return false;
-                    }
-                    first_set.insert(i);
-                } else {
-                    if first_set.contains(&i) {
-                        return false;
-                    }
-                    second_set.insert(i);
+            if is_first_set  {
+                if second_set.contains(&i) {
+                    return false;
                 }
+                first_set.insert(i);
+            } else {
+                if first_set.contains(&i) {
+                    return false;
+                }
+                second_set.insert(i);
+            }
 
-                for &j in &graph[i] {
-                    if visited[i] {
-                        continue;
-                    }
-                    visited[i] = true;
-                    queue.push_back((j as usize, !is_first_set));
+            for &j in &graph[i] {
+                if visited[i] {
+                    continue;
                 }
+                visited[i] = true;
+                queue.push_back((j as usize, !is_first_set));
+            }
         }
     }
 

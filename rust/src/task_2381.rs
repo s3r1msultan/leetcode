@@ -32,7 +32,6 @@ shifts[i].length == 3
 s consists of lowercase English letters.
 
 */
-
 pub fn shifting_letters(s: String, shifts: Vec<Vec<i32>>) -> String {
     let n = s.len();
     let mut number_of_shifts = vec![0; n];
