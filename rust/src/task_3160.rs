@@ -58,7 +58,7 @@ pub fn query_results(limit: i32, queries: Vec<Vec<i32>>) -> Vec<i32> {
 
 
         if let Some(&prev_color) = balls.get(&i) {
-            if prev_color == -1 {
+            if prev_color != -1 {
                 let count = *map.get(&balls[i]).unwrap();
                 if count == 1 {
                     map.remove(&balls[i]);
