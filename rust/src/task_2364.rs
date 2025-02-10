@@ -44,7 +44,5 @@ pub fn count_bad_pairs(nums: Vec<i32>) -> i64 {
         *map.entry(nums[i] - i as i32).or_insert(0) += 1;
     }
 
-    println!("{:?}", map);
-
     bad_pairs
 }
