@@ -32,21 +32,51 @@ p != q
 p and q will exist in the tree.
 
 */
-<<<<<<< HEAD
 use crate::data_structures::tree::TreeNode;
 use std::cell::RefCell;
+// Definition for a binary tree node.
+// #[derive(Debug, PartialEq, Eq)]
+// pub struct TreeNode {
+//   pub val: i32,
+//   pub left: Option<Rc<RefCell<TreeNode>>>,
+//   pub right: Option<Rc<RefCell<TreeNode>>>,
+// }
+//
+// impl TreeNode {
+//   #[inline]
+//   pub fn new(val: i32) -> Self {
+//     TreeNode {
+//       val,
+//       left: None,
+//       right: None
+//     }
+//   }
+// }
 use std::rc::Rc;
-
-pub fn lowest_common_ancestor(root: Option<Rc<RefCell<TreeNode>>>, p: Option<Rc<RefCell<TreeNode>>>, q: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {}
-=======
-
-use std::cell::RefCell;
-use std::rc::Rc;
-use crate::data_structures::tree::TreeNode;
 
 pub fn lowest_common_ancestor(root: Option<Rc<RefCell<TreeNode>>>, p: Option<Rc<RefCell<TreeNode>>>, q: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
-    fn dfs() {
-        
+    let p = p.unwrap().borrow().val;
+    let q = q.unwrap().borrow().val;
+
+    fn dfs(node: Option<Rc<RefCell<TreeNode>>>, p: i32, q: i32) -> Option<Rc<RefCell<TreeNode>>> {
+        if node.is_none() {
+            return None;
+        }
+        let node = node.unwrap();
+        if node.borrow().val == p || node.borrow().val == q {
+            return Some(node);
+        }
+
+        let left = dfs(node.borrow().left.clone(), p, q);
+        let right = dfs(node.borrow().right.clone(), p, q);
+
+        match (left, right) {
+            (Some(_), Some(_)) => Some(node),
+            (Some(left), None) => Some(left),
+            (None, Some(right)) => Some(right),
+            (None, None) => None
+        }
     }
+
+    dfs(root, p, q)
 }
->>>>>>> 2276d2c53b5e5f30758ccd90b506909ec90665d7
