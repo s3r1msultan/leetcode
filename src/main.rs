@@ -492,5 +492,6 @@ mod task_1352;
 
 mod weekly_contest_436;
 mod task_2698;
+mod task_1718;
 
 fn main() {}
