@@ -31,43 +31,39 @@ The number of nodes in the original tree is in the range [1, 1000].
 1 <= Node.val <= 109
 
 */
-use std::cell::{Ref, RefCell};
+
 use std::rc::Rc;
+use std::cell::RefCell;
 use crate::data_structures::tree::TreeNode;
 
 pub fn recover_from_preorder(traversal: String) -> Option<Rc<RefCell<TreeNode>>> {
-    fn dfs(node: Option<&Rc<RefCell<TreeNode>>>, depth: i32, i: usize, bytes: &[u8]) -> usize {
-        if node.is_none() {
-            return i;
-        }
-
-        let mut i = i;
+    fn dfs(i: &mut usize, depth: i32, chars: &[u8]) -> Option<Rc<RefCell<TreeNode>>> {
         let mut dashes = 0;
-        while bytes[i] == b'-' {
-            i += 1;
+        while *i < chars.len() && chars[*i] == b'-' {
             dashes += 1;
+            *i += 1;
         }
 
-        if dashes < depth {
-            return i - dashes as usize;
+        if dashes != depth {
+            *i -= dashes as usize;
+            return None;
         }
 
         let mut num = 0;
-        while bytes[i].is_ascii_alphanumeric() {
+
+        while *i < chars.len() && chars[*i].is_ascii_alphanumeric() {
             num *= 10;
-            num += (bytes[i] - b'0') as i32;
-            i += 1;
+            num += (chars[*i] - b'0') as i32;
+            *i += 1;
         }
 
-        let mut borrow_mut = node.borrow_mut();
-        borrow_mut.val = num;
+        let new_node = Rc::new(RefCell::new(TreeNode::new(num)));
 
+        new_node.borrow_mut().left = dfs(i, depth+1, chars);
+        new_node.borrow_mut().right = dfs(i, depth+1, chars);
 
-        i = dfs(borrow_mut.left.as_ref(), depth + 1, i, bytes);
-        dfs(borrow_mut.right.as_ref(), depth + 1, i, bytes)
-
+        Some(new_node)
     }
-    let root = Rc::new(RefCell::new(TreeNode::new(-1)));
-    dfs(&root, 0, 0, traversal.as_bytes());
-    Some(root)
+    let chars = traversal.as_bytes();
+    dfs(&mut 0, 0, &chars)
 }
