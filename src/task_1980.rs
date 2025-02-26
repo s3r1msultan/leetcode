@@ -56,3 +56,44 @@ pub fn find_different_binary_string(nums: Vec<String>) -> String {
     backtrack(&mut result, &set, &mut String::new(), set.len());
     result
 }*/
+
+pub fn find_different_binary_string(nums: Vec<String>) -> String {
+    use std::collections::HashSet;
+    fn backtrack(curr_binary: &mut String, result: &mut String, set: &HashSet<String>) -> bool {
+        if curr_binary.len() == set.len() {
+            return if !set.contains(curr_binary) {
+                *result = curr_binary.clone();
+                true
+            } else {
+                false
+            };
+        }
+
+        for digit in ['0', '1'] {
+            curr_binary.push(digit);
+            if backtrack(curr_binary, result,set) {
+                return true;
+            }
+            curr_binary.pop();
+        }
+
+        false
+    }
+    let set = nums.into_iter().collect::<HashSet<_>>();
+    let mut result = "".to_string();
+    let mut curr_binary = "".to_string();
+    backtrack(&mut curr_binary, &mut result, &set);
+    result
+}
+
+
+
+
+
+
+
+
+
+
+
+

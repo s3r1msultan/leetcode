@@ -94,34 +94,76 @@ use crate::data_structures::tree::TreeNode;
 //     }
 //   }
 // }
+// struct FindElements {
+//     root: Option<Rc<RefCell<TreeNode>>>,
+//     set: HashSet<i32>
+// }
+//
+//
+// /**
+//  * `&self` means the method takes an immutable reference.
+//  * If you need a mutable reference, change it to `&mut self` instead.
+//  */
+// impl FindElements {
+//
+//     fn new(root: Option<Rc<RefCell<TreeNode>>>) -> Self {
+//         let head = &root;
+//         let mut set = std::collections::HashSet::new();
+//         Self::dfs(root.as_ref(), &mut set, 0);
+//         FindElements {
+//             root: head.clone(),
+//             set
+//         }
+//     }
+//
+//     fn dfs(node: Option<&Rc<RefCell<TreeNode>>>, set: &mut HashSet<i32>, val: i32) {
+//         if let Some(node) = node {
+//             let borrowed = node.borrow();
+//             set.insert(val);
+//             Self::dfs(borrowed.left.as_ref(), set, 2*val+1);
+//             Self::dfs(borrowed.right.as_ref(), set, 2*val + 2);
+//         }
+//     }
+//
+//     fn find(&self, target: i32) -> bool {
+//         self.set.contains(&target)
+//     }
+// }
+
+/**
+ * Your FindElements object will be instantiated and called as such:
+ * let obj = FindElements::new(root);
+ * let ret_1: bool = obj.find(target);
+ */
+
 struct FindElements {
-    root: Option<Rc<RefCell<TreeNode>>>,
     set: HashSet<i32>
 }
 
 
-/**
- * `&self` means the method takes an immutable reference.
- * If you need a mutable reference, change it to `&mut self` instead.
- */
 impl FindElements {
 
     fn new(root: Option<Rc<RefCell<TreeNode>>>) -> Self {
-        let head = &root;
-        let mut set = std::collections::HashSet::new();
-        Self::dfs(root.as_ref(), &mut set, 0);
-        FindElements {
-            root: head.clone(),
+        let mut set = HashSet::new();
+        if root.is_none() {
+            return Self {
+                set
+            };
+        }
+        Self::dfs(root.as_ref().unwrap(), 0, &mut set);
+        Self {
             set
         }
     }
 
-    fn dfs(node: Option<&Rc<RefCell<TreeNode>>>, set: &mut HashSet<i32>, val: i32) {
-        if let Some(node) = node {
-            let borrowed = node.borrow();
-            set.insert(val);
-            Self::dfs(borrowed.left.as_ref(), set, 2*val+1);
-            Self::dfs(borrowed.right.as_ref(), set, 2*val + 2);
+    fn dfs(node: &Rc<RefCell<TreeNode>>, i: i32, set: &mut HashSet<i32>) {
+        set.insert(i);
+        let mut borrow = node.borrow();
+        if let Some(left) = borrow.left.as_ref() {
+            Self::dfs(left, 2*i + 1, set);
+        }
+        if let Some(right) = borrow.right.as_ref() {
+            Self::dfs(right, 2*i + 2, set);
         }
     }
 
@@ -129,9 +171,3 @@ impl FindElements {
         self.set.contains(&target)
     }
 }
-
-/**
- * Your FindElements object will be instantiated and called as such:
- * let obj = FindElements::new(root);
- * let ret_1: bool = obj.find(target);
- */
