@@ -51,9 +51,18 @@ value in adjacentSum and diagonalSum will be in the range [0, n2 - 1].
 At most 2 * n2 calls will be made to adjacentSum and diagonalSum.
 
 */
+use std::collections::HashMap;
 
+const ADJACENT_DIRECTIONS: [(i32, i32); 4] = [(0, 1), (1, 0), (0, -1), (-1, 0)];
+const DIAGONAL_DIRECTIONS: [(i32, i32); 4] = [(1, 1), (-1, -1), (1, -1), (-1, 1)];
+fn is_valid(i: i32, j: i32, n: i32, m: i32) -> bool {
+    i >= 0 && j >= 0 && i < n && j < m
+}
 struct NeighborSum {
-
+    grid: Vec<Vec<i32>>,
+    map: HashMap<i32, (i32, i32)>,
+    n: usize,
+    m: usize
 }
 
 
@@ -62,16 +71,46 @@ struct NeighborSum {
  * If you need a mutable reference, change it to `&mut self` instead.
  */
 impl NeighborSum {
+    fn sum(&self, value: i32, directions: &[(i32, i32);4]) -> i32 {
+        let mut sum = 0;
+        let &(i, j) = self.map.get(&value).unwrap();
+        for &(di, dj) in &directions {
+            let ni = i + di;
+            let nj = j + dj;
+
+            if !is_valid(ni ,nj, self.n as i32, self.m as i32) {
+                continue;
+            }
+
+            let ni = ni as usize;
+            let nj = nj as usize;
+
+            sum += self.grid[ni][nj];
+        }
+        sum
+    }
 
     fn new(grid: Vec<Vec<i32>>) -> Self {
-
+        let n = grid.len();
+        let m = grid[0].len();
+        let mut map = HashMap::new();
+        for i in 0..n {
+            for j in 0..m {
+                map.insert(grid[i][j], (i as i32, j as i32));
+            }
+        }
+        Self {
+            n, m,
+            grid,
+            map
+        }
     }
 
     fn adjacent_sum(&self, value: i32) -> i32 {
-
+        self.sum(value, &ADJACENT_DIRECTIONS)
     }
 
     fn diagonal_sum(&self, value: i32) -> i32 {
-
+       self.sum(value, &DIAGONAL_DIRECTIONS)
     }
 }
