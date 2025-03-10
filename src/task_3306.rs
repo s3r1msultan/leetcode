@@ -72,9 +72,8 @@ pub fn count_of_substrings(word: String, k: i32) -> i64 {
     }
 
     let mut left = 0;
-    let mut right = 0;
 
-    while right < n {
+    for right in 0..n {
         if !is_vowel(chars[right]) {
             consonant_count += 1;
         } else {
@@ -96,7 +95,7 @@ pub fn count_of_substrings(word: String, k: i32) -> i64 {
             left += 1;
         }
 
-        while right < n && vowels_map.keys().len() == 5 && consonant_count == k {
+        while vowels_map.keys().len() == 5 && consonant_count == k {
 
             substring_count += next_consonants[right] - right;
 
@@ -112,8 +111,6 @@ pub fn count_of_substrings(word: String, k: i32) -> i64 {
 
             left += 1;
         }
-
-        right += 1;
     }
 
     substring_count as i64
