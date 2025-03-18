@@ -1,23 +1,22 @@
-pub fn find_missing_and_repeated_values(grid: Vec<Vec<i32>>) -> Vec<i32> {
-    let n = grid.len();
-    let mut result = vec![0, 0];
-    let mut set = vec![false; n*n];
-    for i in 0..n {
-        for j in 0..n {
-            if set[i * n + j - 1] {
-                result[0] = grid[i][j];
-            } else {
-                set[i * n + j - 1] = true;
-            }
+pub fn maximum_candies(candies: Vec<i32>, k: i64) -> i32 {
+    let mut candies = candies;
+    candies.sort_unstable();
+    if candies.iter().fold(0, |acc, &curr| acc + curr as i64) == k {
+        return 0;
+    }
+    let n = candies.len();
+    let k = k as usize;
+    let mut start = 0;
+    let mut end = n - 1;
+
+    while start < end {
+        let mid = start + (end - start) / 2;
+        if n - mid >= k {
+            start = mid + 1;
+        } else {
+            end = mid;
         }
     }
-    for i in 0..n {
-        for j in 0..n {
-            if !set[i * n + j - 1] {
-                result[1] = grid[i][j];
-                return result;
-            }
-        }
-    }
-    result
+
+    candies[start]
 }

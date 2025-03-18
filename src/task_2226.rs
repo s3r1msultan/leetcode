@@ -33,7 +33,6 @@ pub fn maximum_candies(candies: Vec<i32>, k: i64) -> i32 {
         return 0;
     }
 
-
     let mut start = 1;
     let mut end = candies.iter().max().unwrap().clone() + 1;
 
