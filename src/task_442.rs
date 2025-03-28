@@ -31,17 +31,16 @@ Each element in nums appears once or twice.
 */
 
 pub fn find_duplicates(nums: Vec<i32>) -> Vec<i32> {
-    let n = nums.len();
-    let mut max_xor = 0;
-    for i in 1..=n {
-        max_xor ^= i;
-        println!("{i} {max_xor}");
-    }
-    println!();
-    let mut xor = 0;
+    let mut set = std::collections::HashSet::new();
+    let mut result = vec![];
+
     for num in nums {
-        xor ^= num;
-        println!("{num} : {xor}");
+        if set.contains(&num) {
+            result.push(num);
+        } else {
+            set.insert(num);
+        }
     }
-    vec![]
+
+    result
 }
