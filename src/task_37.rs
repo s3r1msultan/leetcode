@@ -30,7 +30,6 @@ It is guaranteed that the input board has only one solution.
 use std::collections::HashSet;
 
 pub fn solve_sudoku(board: &mut Vec<Vec<char>>) {
-
     fn backtrack(board: &mut Vec<Vec<char>>, i: usize, j: usize, set_of_squares: &mut Vec<HashSet<char>>, set_of_columns: &mut Vec<HashSet<char>>, set_of_rows: &mut Vec<HashSet<char>>) -> bool {
         if i == 9 {
             return true;
@@ -45,7 +44,7 @@ pub fn solve_sudoku(board: &mut Vec<Vec<char>>) {
         }
 
         for digit in '1'..='9' {
-            if set_of_squares[square].contains(&digit) || set_of_columns[i].contains(&digit) || set_of_rows[j].contains(&digit){
+            if set_of_squares[square].contains(&digit) || set_of_columns[i].contains(&digit) || set_of_rows[j].contains(&digit) {
                 continue;
             }
 
@@ -70,7 +69,7 @@ pub fn solve_sudoku(board: &mut Vec<Vec<char>>) {
     }
 
     let mut set_of_squares = vec![HashSet::new(); 9];
-    let mut set_of_columns = vec![HashSet::new();9];
+    let mut set_of_columns = vec![HashSet::new(); 9];
     let mut set_of_rows = vec![HashSet::new(); 9];
 
     for i in 0..9 {

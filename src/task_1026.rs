@@ -33,16 +33,32 @@ use std::cell::RefCell;
 use std::rc::Rc;
 
 pub fn max_ancestor_diff(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
-    fn dfs(node: Option<Rc<RefCell<TreeNode>>>) -> i32 {
-        if let Some(node) = node {
-            let borrowed = node.borrow();
-
-
-            dfs(borrowed.left.clone()).max(dfs(borrowed.right.clone()))
-        } else {
-            0
+    fn dfs(node: Option<&Rc<RefCell<TreeNode>>>, min: i32, max: i32) -> i32 {
+        if node.is_none() {
+            return 0;
         }
+
+        let node = node.unwrap();
+        let borrowed = node.borrow();
+
+        let max_diff = (min - borrowed.val).abs().max((max - borrowed.val).abs());
+
+        let min = min.min(borrowed.val);
+        let max = max.max(borrowed.val);
+
+        let left = dfs(borrowed.left.as_ref(), min, max);
+        let right = dfs(borrowed.right.as_ref(), min, max);
+
+
+        [left, right, max_diff].into_iter().max().unwrap()
     }
 
-    dfs(root)
+    if root.is_none() {
+        return 0;
+    }
+
+    let root = root.unwrap();
+    let borrowed = root.borrow();
+
+    dfs(borrowed.left.as_ref(), borrowed.val, borrowed.val).max(dfs(borrowed.right.as_ref(), borrowed.val, borrowed.val))
 }
