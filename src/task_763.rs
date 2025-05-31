@@ -31,22 +31,23 @@ s consists of lowercase English letters.
 
 pub fn partition_labels(s: String) -> Vec<i32> {
     let n = s.len();
-    let bytes = s.as_bytes();
     let mut map = std::collections::HashMap::new();
-    for i in 0..n {
-        map.entry(bytes[i]).or_insert((i, i)).1 = i;
-    }
-    let mut labels = map.values().collect::<Vec<_>>();
 
-    labels.sort_unstable();
+    let s = s.as_bytes();
+
+    for i in 0..n {
+        *map.entry(s[i]).or_insert((i, i)).1 = i;
+    }
+
+    let mut chars = map.values().collect::<Vec<_>>();
+    chars.sort_unstable();
 
     let mut result = vec![];
-    let mut prev_start = labels[0].0;
-    let mut prev_end = labels[0].1;
-
-    for &(start, end) in labels {
+    let mut prev_start = chars[0].0;
+    let mut prev_end = chars[0].1;
+    for &(start, end) in chars {
         if start > prev_end {
-            result.push(prev_end as i32);
+            result.push((prev_end - prev_start + 1) as i32);
             prev_start = start;
         }
 

@@ -38,33 +38,34 @@ Constraints:
 */
 
 pub fn put_marbles(weights: Vec<i32>, k: i32) -> i64 {
-    use std::collections::BinaryHeap;
+    use  std::collections::BinaryHeap;
     use std::cmp::Reverse;
 
-    if weights.len() as i32 == k {
+    let n = weights.len();
+    if n == k as usize {
         return 0;
     }
 
-    let mut min_heap = BinaryHeap::new();
-    let mut max_heap = BinaryHeap::new();
+    let mut result = 0;
 
-    for i in 1..weights.len() {
+    let mut max_heap = BinaryHeap::new();
+    let mut min_heap = BinaryHeap::new();
+
         let curr_weight = weights[i - 1];
         let next_weight = weights[i];
-        min_heap.push(Reverse(curr_weight + next_weight));
         max_heap.push(curr_weight + next_weight);
+        min_heap.push(Reverse(curr_weight + next_weight));
     }
 
-    let mut sum = 0;
-
-    for _ in 0..k - 1 {
-        if let Some(num) = max_heap.pop() {
-            sum += num as i64;
+    for _ in 0..k-1 {
+        if let Some(sum) = max_heap.pop() {
+            result += sum as i64;
         }
-        if let Some(Reverse(num)) = min_heap.pop() {
-            sum -= num as i64;
+
+        if let Some(Reverse(sum)) = min_heap.pop() {
+            result -= sum as i64;
         }
     }
 
-    sum
+    result
 }
