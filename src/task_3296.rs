@@ -62,6 +62,7 @@ Constraints:
 1 <= workerTimes[i] <= 106
 
 */
+
 /*pub fn min_number_of_seconds(mountain_height: i32, worker_times: Vec<i32>) -> i64 {
     use std::cmp::Reverse;
     let mut mountain_height = mountain_height;
@@ -92,11 +93,11 @@ Constraints:
 pub fn min_number_of_seconds(mountain_height: i32, worker_times: Vec<i32>) -> i64 {
     fn can_find(mountain_height: u64, worker_times: &Vec<i32>, time_limit: u64) -> bool {
         let mut total_height = 0;
-        
+
         for &worker_time in worker_times {
             let mut start = 1;
             let mut end = 10u64.pow(6);
-            
+
             while start < end {
                 let mid = start + (end - start) / 2;
                 let time = worker_time as u64 * mid * (mid + 1) / 2;
@@ -109,7 +110,7 @@ pub fn min_number_of_seconds(mountain_height: i32, worker_times: Vec<i32>) -> i6
 
             total_height += start - 1;
         }
-        
+
         total_height >= mountain_height
     }
 

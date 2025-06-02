@@ -33,11 +33,41 @@ nums.length == n
 pub fn count_fair_pairs(nums: Vec<i32>, lower: i32, upper: i32) -> i64 {
     let mut nums = nums;
     nums.sort_unstable();
+    let n = nums.len();
     let mut count = 0i64;
-    for (i, &n) in nums.iter().enumerate() {
-        let left = nums.partition_point(|&x| x + n < lower).max(i + 1);
-        let right = nums.partition_point(|&x| x + n <= upper).max(i + 1);
-        count += 0.max(right - left) as i64
+
+    for i in 0..n {
+        let mut left = i + 1;
+
+        let mut right = n;
+
+
+        while left < right {
+            let mid = left + (right - left) / 2;
+            if nums[i] + nums[mid] >= lower {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+
+        let start = left;
+        let mut left = i + 1;
+        let mut right = n;
+        while left < right {
+            let mid = left + (right - left) / 2;
+
+            if nums[i] + nums[mid] <= upper {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+
+        let end = left;
+
+        count += (end - start) as i64;
     }
+
     count
 }

@@ -35,7 +35,7 @@ At most 1000 calls will be made to book.
 */
 
 struct MyCalendar {
-	root: Vec<(i32, i32)>,
+    bookings: Vec<(i32, i32)>,
 }
 
 
@@ -44,24 +44,21 @@ struct MyCalendar {
  * If you need a mutable reference, change it to `&mut self` instead.
  */
 impl MyCalendar {
-	fn new() -> Self {
-		MyCalendar {
-			root: vec![]
-		}
-	}
+    fn new() -> Self {
+        MyCalendar {
+            bookings: vec![]
+        }
+    }
 
-	fn book(&mut self, start: i32, end: i32) -> bool {
-		let vector = &mut self.root;
-		for &(new_start, new_end) in vector.iter() {
-			if new_start < end || new_end > start {}
-		}
-		vector.push((start, end));
-		true
-	}
+    fn book(&mut self, curr_start: i32, curr_end: i32) -> bool {
+        for &(prev_start, prev_end) in &self.bookings {
+            if curr_start < prev_end && prev_end <= curr_end {
+                return false;
+            }
+        }
+
+        self.bookings.push((curr_start, curr_end));
+        true
+    }
 }
 
-/*
- * Your MyCalendar object will be instantiated and called as such:
- * let obj = MyCalendar::new();
- * let ret_1: bool = obj.book(start, end);
- */

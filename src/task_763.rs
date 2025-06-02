@@ -50,6 +50,7 @@ pub fn partition_labels(s: String) -> Vec<i32> {
             result.push((prev_end - prev_start + 1) as i32);
             prev_start = start;
         }
+
         prev_end = prev_end.max(end);
     }
 
