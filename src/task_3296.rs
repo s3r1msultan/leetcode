@@ -63,7 +63,7 @@ Constraints:
 
 */
 
-pub fn min_number_of_seconds(mountain_height: i32, worker_times: Vec<i32>) -> i64 {
+/*pub fn min_number_of_seconds(mountain_height: i32, worker_times: Vec<i32>) -> i64 {
     use std::cmp::Reverse;
     let mut mountain_height = mountain_height;
     let mut seconds = 0;
@@ -75,7 +75,7 @@ pub fn min_number_of_seconds(mountain_height: i32, worker_times: Vec<i32>) -> i6
     }
 
     while let Some(Reverse((time, worker_time, height))) = min_heap.pop() {
-        seconds = time;
+        seconds = seconds.max(time);
 
         mountain_height -= 1;
         if mountain_height == 0 {
@@ -83,9 +83,50 @@ pub fn min_number_of_seconds(mountain_height: i32, worker_times: Vec<i32>) -> i6
         }
 
         let next_height = height + 1;
-        let next_time = worker_time * ((next_height * (next_height + 1)) / 2);
+        let next_time = time + worker_time * next_height;
         min_heap.push(Reverse((next_time, worker_time, next_height)));
     }
 
     seconds
+}*/
+
+pub fn min_number_of_seconds(mountain_height: i32, worker_times: Vec<i32>) -> i64 {
+    fn can_find(mountain_height: u64, worker_times: &Vec<i32>, time_limit: u64) -> bool {
+        let mut total_height = 0;
+
+        for &worker_time in worker_times {
+            let mut start = 1;
+            let mut end = 10u64.pow(6);
+
+            while start < end {
+                let mid = start + (end - start) / 2;
+                let time = worker_time as u64 * mid * (mid + 1) / 2;
+                if time <= time_limit {
+                    start = mid + 1;
+                } else {
+                    end = mid;
+                }
+            }
+
+            total_height += start - 1;
+        }
+
+        total_height >= mountain_height
+    }
+
+
+    let mut start = 0;
+    let mut end = 10u64.pow(14);
+
+
+    while start < end {
+        let mid = start + (end - start) / 2;
+        if can_find(mountain_height as u64, &worker_times, mid) {
+            end = mid;
+        } else {
+            start = mid + 1;
+        }
+    }
+
+    end as i64
 }
