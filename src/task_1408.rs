@@ -42,7 +42,7 @@ struct TrieNode {
 impl TrieNode {
     fn new() -> Self {
         Self {
-            children: [None; 26],
+            children: Default::default(),
             frequency: 0,
         }
     }
@@ -71,7 +71,7 @@ impl Trie {
         }
     }
 
-    fn get(&self, word: &str) -> bool {
+    fn exists(&self, word: &str) -> bool {
         let mut node = &self.root;
         for &ch in word.as_bytes() {
             let i = (ch - b'a') as usize;
@@ -98,7 +98,7 @@ pub fn string_matching(words: Vec<String>) -> Vec<String> {
     let mut result = vec![];
 
     for word in &words {
-        if trie.get(&word) {
+        if trie.exists(&word) {
             result.push(word.clone());
         }
     }

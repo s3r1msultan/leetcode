@@ -57,5 +57,5 @@ pub fn print_vertically(s: String) -> Vec<String> {
         }
     }
 
-    result.into_iter().map(|chars| chars.into_iter().collect::<String>().trim_end()).collect()
+    result.into_iter().map(|chars| chars.into_iter().collect::<String>().trim_end().to_string()).collect()
 }

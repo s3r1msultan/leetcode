@@ -30,7 +30,31 @@ arr.length == m * n
 1 <= m, n <= 105
 1 <= m * n <= 105
 1 <= arr[i], mat[r][c] <= m * n
-
+*/
 pub fn first_complete_index(arr: Vec<i32>, mat: Vec<Vec<i32>>) -> i32 {
+    let mut map = std::collections::HashMap::new();
     
+    let n = mat.len();
+    let m = mat[0].len();
+    
+    for i in 0..n {
+        for j in 0..m {
+            *map.entry(mat[i][j]).or_default() = (i, j);
+        }
+    }
+    
+    let mut rows = vec![0; n];
+    let mut cols = vec![0; m];
+    
+    for k in 0..arr.len(){
+        let &(i, j) = map.get(&arr[k]).unwrap();
+        rows[i] += 1;
+        cols[j] += 1;
+        
+        if rows[i] == n || cols[j] == m {
+            return k as i32;
+        }
+    }
+    
+    -1
 }

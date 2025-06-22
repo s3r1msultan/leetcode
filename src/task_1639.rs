@@ -50,31 +50,33 @@ words[i] and target contain only lowercase English letters.
 pub fn num_ways(words: Vec<String>, target: String) -> i32 {
     const MOD: i64 = 1_000_000_007;
 
-    let m = target.len();
-    let n = words[0].len();
+    let target_len = target.len();
+    let word_len = words[0].len();
 
 
-    let mut char_counts = vec![[0; 26]; words[0].len()];
+    let mut char_counts = vec![[0; 26]; word_len];
 
-    for &word in &words {
+    for word in &words {
         let bytes = word.as_bytes();
         for (i, &byte) in bytes.iter().enumerate() {
-            char_counts[i][(byte - 'a' as u8) as usize] += 1;
+            let j = (byte - 'a' as u8) as usize;
+            char_counts[i][j] += 1;
         }
     }
 
-    let mut dp = vec![vec![0; n + 1]; m + 1];
+    let mut dp = vec![vec![0; word_len + 1]; target_len + 1];
     dp[0][0] = 1;
     let target = target.as_bytes();
 
-    for i in 0..=m {
-        for j in 0..n {
-            if i < n && char_counts[j][(target[i] - 'a' as u8) as usize] > 0 {
-                dp[i + 1][j + 1] = (dp[i + 1][j + 1] + dp[i][j] * char_counts[j][(target[i] - 'a' as u8) as usize] as i64) % MOD;
+    for i in 0..=target_len {
+        for j in 0..word_len {
+            let k = (target[i] - 'a' as u8) as usize;
+            if i < word_len && char_counts[j][k] > 0 {
+                dp[i + 1][j + 1] = (dp[i + 1][j + 1] + dp[i][j] * char_counts[j][k] as i64) % MOD;
             }
             dp[i][j + 1] = (dp[i][j + 1] + dp[i][j]) % MOD;
         }
     }
 
-    dp[n][m] as i32
+    dp[word_len][target_len] as i32
 }

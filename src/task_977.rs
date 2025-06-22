@@ -25,4 +25,22 @@ nums is sorted in non-decreasing order.
 
 Follow up: Squaring each element and sorting the new array is very trivial, could you find an O(n) solution using a different approach?*/
 
-pub fn sorted_squares(mut nums: Vec<i32>) -> Vec<i32> {}
+pub fn sorted_squares(nums: Vec<i32>) -> Vec<i32> {
+    let mut result = vec![0; 10000 + 1];
+
+    for mut num in nums {
+        if num < 0 {
+            num *= -1;
+        }
+        result[num as usize] += 1;
+    }
+
+    let result = result.into_iter().enumerate().filter(|&(i, x)| x > 0).collect::<Vec<_>>();
+    let mut answer = vec![];
+    for (i, num) in result {
+        for _ in 0..num {
+            answer.push((i * i) as i32);
+        }
+    }
+    answer
+}

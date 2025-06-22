@@ -42,10 +42,10 @@ use std::collections::HashSet;
 pub fn dest_city(paths: Vec<Vec<String>>) -> String {
     let mut set = HashSet::new();
     for path in &paths {
-        set.insert(path[0].as_str());
+        set.insert(path[0].to_string());
     }
 
-    for path in &paths {
+    for path in paths {
         if !set.contains(&path[0]) {
             return path[0].clone();
         }

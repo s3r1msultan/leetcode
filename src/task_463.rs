@@ -71,9 +71,16 @@ pub fn island_perimeter(grid: Vec<Vec<i32>>) -> i32 {
                     let ni = i as i32 + di;
                     let nj = j as i32 + dj;
 
-                    if !is_valid(ni, nj, n as i32, m as i32) || grid[ni][nj] == 0 {
+                    if !is_valid(ni, nj, n as i32, j as i32) { 
                         count += 1;
-                        continue;
+                        continue
+                    }
+                    
+                    let ni = ni as usize;
+                    let nj = nj as usize;
+                    
+                    if grid[ni][nj] == 0 {
+                        count += 1;
                     }
                 }
             }

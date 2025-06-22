@@ -82,10 +82,3 @@ impl ProductOfNumbers {
         }
     }
 }
-
-/**
- * Your ProductOfNumbers object will be instantiated and called as such:
- * let obj = ProductOfNumbers::new();
- * obj.add(num);
- * let ret_2: i32 = obj.get_product(k);
- */

@@ -98,14 +98,20 @@ pub fn num_enclaves(grid: Vec<Vec<i32>>) -> i32 {
                 union_find.boundaries[curr_index] = true;
             }
 
-            for &(dx, dy) in &directions {
-                let nx = j as i32 + dx;
-                let ny = i as i32 + dy;
-                if is_valid(ny, nx, n as i32, m as i32) && grid[ny][nx] == 1 {
-                    let nx = nx as usize;
-                    let ny = ny as usize;
-                    let new_index = ny * n + nx;
-                    if is_boundary(ny, nx, n, m) {
+            for &(di, dj) in &directions {
+                let ni = i as i32 + di;
+                let nj = j as i32 + dj;
+                
+                if !is_valid(nj, ni, n as i32, m as i32) {
+                    continue
+                }
+                
+                let ni = ni as usize;
+                let nj = nj as usize;
+                
+                if grid[ni][nj] == 1 {
+                    let new_index = ni * n + nj;
+                    if is_boundary(ni, nj, n, m) {
                         union_find.boundaries[new_index] = true;
                     }
                     union_find.union(curr_index, new_index);

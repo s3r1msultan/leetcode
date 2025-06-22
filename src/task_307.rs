@@ -51,7 +51,7 @@ struct NumArray {
 impl NumArray {
     fn new(nums: Vec<i32>) -> Self {
         let n = nums.len();
-        let mut tree = vec![0; n * 4];
+        let tree = vec![0; n * 4];
         let mut segment_tree = NumArray { n, tree };
         segment_tree.build(&nums, 0, 0, n - 1);
         segment_tree
@@ -116,10 +116,3 @@ impl NumArray {
         }
     }
 }
-
-/**
- * Your NumArray object will be instantiated and called as such:
- * let obj = NumArray::new(nums);
- * obj.update(index, val);
- * let ret_2: i32 = obj.sum_range(left, right);
- */

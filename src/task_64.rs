@@ -28,7 +28,7 @@
 pub fn min_path_sum(grid: Vec<Vec<i32>>) -> i32 {
     let n = grid.len();
     let m = grid[0].len();
-    let directions = [(0, 1), (1, 0), (-1, 0), (0, -1)];
+    let directions = [(0, 1), (1, 0)];
     fn is_valid(i: i32, j: i32, n: i32, m: i32) -> bool {
         i >= 0 && j >= 0 && i < n && j < m
     }
@@ -37,6 +37,7 @@ pub fn min_path_sum(grid: Vec<Vec<i32>>) -> i32 {
     dp[0][0] = grid[0][0];
 
     let mut queue = std::collections::VecDeque::new();
+    queue.push_back((0, 0));
 
     while let Some((i, j)) = queue.pop_front() {
         for &(di, dj) in &directions {

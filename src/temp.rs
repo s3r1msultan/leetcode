@@ -91,7 +91,7 @@ pub fn min_time_to_reach(move_time: Vec<Vec<i32>>) -> i32 {
 
 pub fn three_consecutive_odds(nums: Vec<i32>) -> bool {
     let mut count = 0;
-    
+
     for num in nums {
         if num % 2 == 1 {
             count += 1;
@@ -105,4 +105,159 @@ pub fn three_consecutive_odds(nums: Vec<i32>) -> bool {
     }
 
     false
+}
+
+
+use crate::data_structures::tree::TreeNode;
+use std::cell::RefCell;
+use std::collections::HashSet;
+use std::hash::Hash;
+use std::rc::Rc;
+
+pub fn all_possible_fbt(n: i32) -> Vec<Option<Rc<RefCell<TreeNode>>>> {
+    if n % 2 == 0 {
+        return vec![];
+    }
+
+    use std::collections::HashMap;
+
+    fn dfs(n: i32, memo: &mut HashMap<i32, Vec<Option<Rc<RefCell<TreeNode>>>>>) -> Vec<Option<Rc<RefCell<TreeNode>>>> {
+        if let Some(vec) = memo.get(&n) {
+            return vec.clone();
+        }
+
+        if n == 1 {
+            return vec![Some(Rc::new(RefCell::new(TreeNode::new(0))))];
+        }
+        let mut result = vec![];
+        let mut node = TreeNode::new(0);
+
+        for i in (1..n - 1).step_by(2) {
+            let left_parts = dfs(i, memo);
+            let right_parts = dfs(n - i - 1, memo);
+
+            for left_part in &left_parts {
+                for right_part in &right_parts {
+                    result.push(Some(Rc::new(RefCell::new(TreeNode { val: 0, left: left_part.clone(), right: right_part.clone() }))));
+                }
+            }
+        }
+
+        memo.insert(n, result.clone());
+        result
+    }
+
+    let mut memo = HashMap::new();
+
+    dfs(n, &mut memo)
+}
+
+
+pub fn solve_sudoku(board: &mut Vec<Vec<char>>) {
+    let mut rows = vec![HashSet::new(); 9];
+    let mut cols = vec![HashSet::new(); 9];
+    let mut squares = vec![HashSet::new(); 9];
+
+
+    for i in 0..board.len() {
+        for j in 0..board[0].len() {
+            if board[i][j] == '.' {
+                continue;
+            }
+            let digit = board[i][j];
+            rows[i].insert(digit);
+            cols[j].insert(digit);
+
+            let square = i / 3 * 3 + j / 3;
+            squares[square].insert(digit);
+        }
+    }
+
+
+    fn backtrack(board: &mut Vec<Vec<char>>, i: usize, j: usize, rows: &mut Vec<HashSet<char>>, cols: &mut Vec<HashSet<char>>, squares: &mut Vec<HashSet<char>>) -> bool {
+        if i == 9 {
+            return true;
+        }
+
+        if j == 9 {
+            return backtrack(board, i + 1, 0, rows, cols, squares);
+        }
+
+        if board[i][j] != '.' {
+            return backtrack(board, i, j + 1, rows, cols, squares);
+        }
+
+        let square = i / 3 * 3 + j / 3;
+
+        for ch in '1'..'9' {
+            if rows[i].contains(&ch) || cols[j].contains(&ch) || squares[square].contains(&ch) {
+                continue;
+            }
+
+            rows[i].insert(ch);
+            cols[j].insert(ch);
+            squares[square].insert(ch);
+            board[i][j] = ch;
+
+            if backtrack(board, i, j + 1, rows, cols, squares) {
+                return true;
+            }
+
+            rows[i].remove(&ch);
+            cols[j].remove(&ch);
+            squares[square].remove(&ch);
+            board[i][j] = '.';
+        }
+
+        false
+    }
+
+    backtrack(board, 0, 0, &mut rows, &mut cols, &mut squares);
+}
+
+const MARGIN: i32 = 300;
+
+struct RobotStatistics {
+    requests: Vec<(i32, i32)>,
+}
+
+impl RobotStatistics {
+    fn on_event(&mut self, now: i32, user_id: i32) {
+        if self.requests.len() == 0 {
+            return;
+        }
+        let first = self.requests[0].0;
+        if now - first > MARGIN {
+            self.requests = self.requests[1..].iter().clone().collect();
+        }
+        self.requests.push((now, user_id));
+    }
+
+    fn get_robot_count(&self, now: i32) -> i32 {
+        let n = self.requests.len();
+
+        let last_request_time = now;
+
+        let mut start = 0;
+        let mut end = self.requests.len();
+
+        while start < end {
+            let mid = start + (end - start) / 2;
+
+            if last_request_time - self.requests[mid].0 <= MARGIN {
+                end = mid;
+            } else {
+                start = mid + 1;
+            }
+        }
+
+        let mut map = std::collections::HashMap::new();
+
+        for i in end..n {
+            let id = self.requests[i].1;
+            *map.entry(id).or_insert(0) += 1;
+        }
+
+        map.into_iter().filter(|&(_, count)| count >= 1000).count() as i32
+    }
 }

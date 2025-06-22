@@ -33,10 +33,10 @@ pub fn partition_labels(s: String) -> Vec<i32> {
     let n = s.len();
     let mut map = std::collections::HashMap::new();
 
-    let s = s.as_bytes();
+    let s = s.chars().collect::<Vec<_>>();
 
     for i in 0..n {
-        *map.entry(s[i]).or_insert((i, i)).1 = i;
+        map.entry(s[i]).or_insert((i, i)).1 = i;
     }
 
     let mut chars = map.values().collect::<Vec<_>>();

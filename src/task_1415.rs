@@ -42,6 +42,7 @@ pub fn get_happy_string(n: i32, k: i32) -> String {
     fn backtrack(curr_string: &mut String, prev_char: char, happy_letters: &[char; 3], n: usize, result: &mut Vec<String>) {
         if curr_string.len() == n {
             result.push(curr_string.clone());
+            return;
         }
 
         for &char in happy_letters {
@@ -58,9 +59,9 @@ pub fn get_happy_string(n: i32, k: i32) -> String {
     let mut result: Vec<String> = vec![];
     let mut curr_string = String::new();
     backtrack(&mut curr_string, '\0', &happy_letters, n, &mut result);
-
-    if let Some(&s) = result.get(k as usize - 1) {
-        s
+    let k = k as usize - 1;
+    if let Some(s) = result.get(k) {
+        s.clone()
     } else {
         "".to_string()
     }

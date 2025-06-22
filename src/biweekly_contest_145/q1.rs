@@ -46,7 +46,7 @@ The operations can be performed using valid integers in the order 7, 5, 3, and 1
 
 pub fn min_operations(nums: Vec<i32>, k: i32) -> i32 {
     use std::collections::HashSet;
-    let mut set = nums.iter().collect::<HashSet<i32>>();
+    let mut set = nums.into_iter().collect::<HashSet<i32>>();
     for num in 1..k {
         if set.contains(&num) {
             return -1;

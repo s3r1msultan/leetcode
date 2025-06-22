@@ -33,7 +33,7 @@ pub fn trap(height: Vec<i32>) -> i32 {
             }
 
             let distance = index - stack.last().unwrap() - 1;
-            let min_height = val.min(height[stack.last().unwrap()]) - height[popped_index];
+            let min_height = val.min(height[*stack.last().unwrap()]) - height[popped_index];
             res += min_height * distance as i32;
         }
         stack.push(index)

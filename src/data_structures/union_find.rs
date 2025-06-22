@@ -18,7 +18,7 @@ impl UnionFind {
             return;
         }
 
-        Self.representatives[parent_b] = parent_a;
+        self.representatives[parent_b] = parent_a;
     }
 
     pub fn add(&mut self, a: usize, b: usize) {
@@ -34,8 +34,4 @@ impl UnionFind {
         self.representatives[x] = root;
         root
     }
-}
-
-fn main() {
-    let mut parents = vec![];
 }

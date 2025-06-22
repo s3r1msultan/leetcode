@@ -50,7 +50,7 @@ pub fn put_marbles(weights: Vec<i32>, k: i32) -> i64 {
 
     let mut max_heap = BinaryHeap::new();
     let mut min_heap = BinaryHeap::new();
-
+    for i in 0..n {
         let curr_weight = weights[i - 1];
         let next_weight = weights[i];
         max_heap.push(curr_weight + next_weight);

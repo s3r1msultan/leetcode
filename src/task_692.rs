@@ -78,7 +78,7 @@ pub fn top_k_frequent(words: Vec<String>, k: i32) -> Vec<String> {
     }
     let mut result = vec![];
     for _ in 0..k {
-        result.push(heap.pop().unwrap().1);
+        result.push(heap.pop().unwrap().word);
     }
     result
 }

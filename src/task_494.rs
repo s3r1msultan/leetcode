@@ -36,7 +36,7 @@ Constraints:
 */
 pub fn find_target_sum_ways(nums: Vec<i32>, target: i32) -> i32 {
     fn backtrack(nums: &Vec<i32>, i: usize, target: i32) -> i32 {
-        if i + 1 == nums.len() {
+        if i == nums.len() {
             return if target == 0 {
                 1
             } else {
@@ -44,7 +44,7 @@ pub fn find_target_sum_ways(nums: Vec<i32>, target: i32) -> i32 {
             };
         }
 
-        backtrack(&nums, i + 1, target[i + 1]) + backtrack(&nums, i + 1, target - nums[i])
+        backtrack(&nums, i + 1, target + nums[i]) + backtrack(&nums, i + 1, target - nums[i])
     }
 
     backtrack(&nums, 0, target)

@@ -1,4 +1,4 @@
-derive!(Debug);
+#[derive(Debug)]
 struct BIT {
     tree: Vec<i32>,
     n: usize,
