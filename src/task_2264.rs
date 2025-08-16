@@ -41,24 +41,24 @@ num only consists of digits.
 */
 
 pub fn largest_good_integer(num: String) -> String {
-    let n = num.len();
-    let chars = num.chars().collect::<Vec<_>>();
-    let mut curr = "".to_string();
-    let mut result = "".to_string();
-    let mut left = 0;
+    let mut result = vec![];
 
+    let chars = num.chars().collect::<Vec<_>>();
+
+    let n = chars.len();
+
+    let mut left = 0;
     for right in 0..n {
         if chars[left] != chars[right] {
-            left += 1;
-            curr.clear();
+            left = right;
+            continue;
         }
-        curr.push(chars[left]);
 
         if right - left + 1 == 3 {
-            left = right;
-            result = result.max(curr.clone());
+            result = result.max(chars[left..=right].to_vec());
         }
     }
 
-    result
+    result.into_iter().collect()
 }
+
