@@ -41,5 +41,12 @@ Constraints:
 
 */
 
-pub fn count_squares(matrix: Vec<Vec<i32>>) -> i32 {}
+pub fn count_squares(matrix: Vec<Vec<i32>>) -> i32 {
+    let n = matrix.len();
+    let m = matrix[0].len();
+    let mut prefix_sum = vec![];
 
+    let mut result = 0;
+
+    result
+}
