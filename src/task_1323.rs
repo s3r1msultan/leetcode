@@ -36,28 +36,33 @@ num consists of only 6 and 9 digits.
 
 */
 
+use crate::task_7::reverse;
 
-fn maximum69_number(n: i32) -> i32 {
-    let mut n = n;
-    let mut new_num = 0;
-    while n != 0 {
-        new_num *= 10;
-        new_num += n % 10;
-        n /= 10;
+fn maximum69_number(num: i32) -> i32 {
+    let mut num = num;
+    let mut reversed_num = 0;
+
+    while num != 0 {
+        reversed_num *= 10;
+        reversed_num += num % 10;
+        num /= 10;
     }
-    let mut is_replaced = false;
 
-    while new_num != 0 {
-        n *= 10;
-        if !is_replaced && new_num % 10 == 6 {
-            n += 9;
-            is_replaced = true;
-        } else {
-            n += new_num % 10;
+    while reversed_num != 0 {
+        num *= 10;
+        num += 9;
+        if reversed_num % 10 == 6 {
+            break;
         }
-        new_num /= 10;
+        reversed_num /= 10;
     }
-    n
+
+    while reversed_num != 0 {
+        num *= 10;
+        num += reversed_num % 10;
+        reversed_num /= 10;
+    }
+    num
 }
 
 #[cfg(test)]
@@ -79,3 +84,4 @@ fn test_maximum69_number() {
     let result = 969;
     assert_eq!(maximum69_number(n), result);
 }
+

@@ -5,7 +5,6 @@
 // Return an array answers, equal in length to queries, where answers[i] is the answer to the ith query. Since the answer to the ith query may be too large, each answers[i] should be returned modulo 109 + 7.
 //
 //
-//
 // Example 1:
 //
 // Input: n = 15, queries = [[0,1],[2,2],[0,3]]
@@ -24,7 +23,6 @@
 // Explanation:
 // For n = 2, powers = [2].
 // The answer to the only query is powers[0] = 2. The answer modulo 109 + 7 is the same, so [2] is returned.
-//
 //
 //
 // Constraints:
@@ -53,12 +51,14 @@ pub fn product_queries(n: i32, queries: Vec<Vec<i32>>) -> Vec<i32> {
     for i in 0..n {
         prefix_sum[i + 1] = (prefix_sum[i] * powers_of_two[i]) % MOD;
     }
-
     for query in queries {
         let left = query[0] as usize;
         let right = query[1] as usize;
-
-        result.push(prefix_sum[right + 1] / prefix_sum[left]);
+        let mut query = 1u64;
+        for i in left..=right {
+            query *= 1 << powers_of_two[i];
+        }
+        result.push(query as i32);
     }
 
     result
