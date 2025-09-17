@@ -43,7 +43,6 @@ pub fn can_partition(nums: Vec<i32>) -> bool {
     dp[n][half_sum] == half_sum as i32
 }
 
-
 pub fn min_time_to_reach(move_time: Vec<Vec<i32>>) -> i32 {
     use std::cmp::Reverse;
     let directions = [(0, 1), (1, 0), (-1, 0), (0, -1)];
@@ -107,7 +106,6 @@ pub fn three_consecutive_odds(nums: Vec<i32>) -> bool {
     false
 }
 
-
 use crate::data_structures::tree::TreeNode;
 use std::cell::RefCell;
 use std::collections::HashSet;
@@ -121,7 +119,10 @@ pub fn all_possible_fbt(n: i32) -> Vec<Option<Rc<RefCell<TreeNode>>>> {
 
     use std::collections::HashMap;
 
-    fn dfs(n: i32, memo: &mut HashMap<i32, Vec<Option<Rc<RefCell<TreeNode>>>>>) -> Vec<Option<Rc<RefCell<TreeNode>>>> {
+    fn dfs(
+        n: i32,
+        memo: &mut HashMap<i32, Vec<Option<Rc<RefCell<TreeNode>>>>>,
+    ) -> Vec<Option<Rc<RefCell<TreeNode>>>> {
         if let Some(vec) = memo.get(&n) {
             return vec.clone();
         }
@@ -138,7 +139,11 @@ pub fn all_possible_fbt(n: i32) -> Vec<Option<Rc<RefCell<TreeNode>>>> {
 
             for left_part in &left_parts {
                 for right_part in &right_parts {
-                    result.push(Some(Rc::new(RefCell::new(TreeNode { val: 0, left: left_part.clone(), right: right_part.clone() }))));
+                    result.push(Some(Rc::new(RefCell::new(TreeNode {
+                        val: 0,
+                        left: left_part.clone(),
+                        right: right_part.clone(),
+                    }))));
                 }
             }
         }
@@ -152,12 +157,10 @@ pub fn all_possible_fbt(n: i32) -> Vec<Option<Rc<RefCell<TreeNode>>>> {
     dfs(n, &mut memo)
 }
 
-
 pub fn solve_sudoku(board: &mut Vec<Vec<char>>) {
     let mut rows = vec![HashSet::new(); 9];
     let mut cols = vec![HashSet::new(); 9];
     let mut squares = vec![HashSet::new(); 9];
-
 
     for i in 0..board.len() {
         for j in 0..board[0].len() {
@@ -173,8 +176,14 @@ pub fn solve_sudoku(board: &mut Vec<Vec<char>>) {
         }
     }
 
-
-    fn backtrack(board: &mut Vec<Vec<char>>, i: usize, j: usize, rows: &mut Vec<HashSet<char>>, cols: &mut Vec<HashSet<char>>, squares: &mut Vec<HashSet<char>>) -> bool {
+    fn backtrack(
+        board: &mut Vec<Vec<char>>,
+        i: usize,
+        j: usize,
+        rows: &mut Vec<HashSet<char>>,
+        cols: &mut Vec<HashSet<char>>,
+        squares: &mut Vec<HashSet<char>>,
+    ) -> bool {
         if i == 9 {
             return true;
         }
@@ -260,4 +269,133 @@ impl RobotStatistics {
 
         map.into_iter().filter(|&(_, count)| count >= 1000).count() as i32
     }
+}
+
+pub fn count_squares(matrix: Vec<Vec<i32>>) -> i32 {
+    let n = matrix.len();
+    let m = matrix[0].len();
+    let mut result = 0;
+
+    let mut dp = vec![vec![0; m]; n];
+
+    for i in 0..n {
+        for j in 0..m {
+            if matrix[i][j] == 1 {
+                if i == 0 || j == 0 {
+                    dp[i][j] = 1;
+                } else {
+                    dp[i][j] = 1 + vec![dp[i][j - 1], dp[i - 1][j], dp[i - 1][j - 1]]
+                        .into_iter()
+                        .min()
+                        .unwrap();
+                }
+                result += dp[i][j];
+            }
+        }
+    }
+
+    result
+}
+
+pub fn longest_subarray(nums: Vec<i32>) -> i32 {
+    let n = nums.len();
+    let mut result = 0;
+
+    let mut is_found = false;
+
+    let mut left = 0;
+    for right in 0..n {
+        if nums[right] == 0 {
+            if is_found {
+                while nums[left] != 0 && left < 0 {
+                    left += 1;
+                }
+            } else {
+                is_found = true;
+            }
+        }
+
+        result = result.max(right - left - 1 - if is_found { 1 } else { 0 });
+    }
+
+    result
+}
+
+use std::cmp::Ordering;
+#[derive(Debug)]
+struct Class {
+    pass: i32,
+    total: i32,
+    gain: f64,
+}
+
+impl Class {
+    pub fn new(pass: i32, total: i32) -> Self {
+        let gain = ((pass + 1) as f64 / (total + 1) as f64) - (pass as f64 / total as f64);
+        Class { pass, total, gain }
+    }
+
+    pub fn ratio(&self) -> f64 {
+        self.pass as f64 / self.total as f64
+    }
+
+    pub fn update(&mut self) {
+        self.pass += 1;
+        self.total += 1;
+        self.gain = ((self.pass + 1) as f64 / (self.total + 1) as f64)
+            - self.pass as f64 / self.total as f64;
+    }
+}
+
+impl Eq for Class {}
+
+impl PartialEq for Class {}
+impl Ord for Class {
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.gain.partial_cmp(&other.gain).unwrap()
+    }
+}
+
+impl PartialOrd for Class {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        self.gain.partial_cmp(&other.gain)
+    }
+}
+
+pub fn max_average_ratio(classes: Vec<Vec<i32>>, extra_students: i32) -> f64 {
+    use std::collections::BinaryHeap;
+    let n = classes.len() as f64;
+    let mut min_heap = BinaryHeap::new();
+
+    for class in classes {
+        let class = Class::new(class[0], class[1]);
+        min_heap.push(class);
+    }
+
+    for _ in 0..extra_students {
+        let mut class = min_heap.pop().unwrap();
+        class.update();
+        min_heap.push(class);
+    }
+
+    let mut result = 0.0;
+    while let Some(class) = min_heap.pop() {
+        result += class.pass as f64 / class.total as f64;
+    }
+    result / n
+}
+
+pub fn sum_zero(n: i32) -> Vec<i32> {
+    let mut result = vec![];
+
+    for i in 1..=n / 2 {
+        result.push(i);
+        result.push(-i);
+    }
+
+    if n % 2 == 1 {
+        result.push(0);
+    }
+
+    result
 }

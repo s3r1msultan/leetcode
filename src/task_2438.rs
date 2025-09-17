@@ -4,7 +4,6 @@
 //
 // Return an array answers, equal in length to queries, where answers[i] is the answer to the ith query. Since the answer to the ith query may be too large, each answers[i] should be returned modulo 109 + 7.
 //
-//  
 //
 // Example 1:
 //
@@ -25,7 +24,6 @@
 // For n = 2, powers = [2].
 // The answer to the only query is powers[0] = 2. The answer modulo 109 + 7 is the same, so [2] is returned.
 //
-//  
 //
 // Constraints:
 //
@@ -34,32 +32,34 @@
 //     0 <= starti <= endi < powers.length
 //
 //
-
-
+//
 pub fn product_queries(n: i32, queries: Vec<Vec<i32>>) -> Vec<i32> {
-    let mut power_of_twos = vec![];
-    for i in 0..31 {
-        if (n >> i) & 1 == 1 {
-            power_of_twos.push(i);
-        }
-
-    }
-
-    // println!("{:?}", power_of_twos);
-    let n = power_of_twos.len();
+    const MOD: i32 = 1_000_000_007;
 
     let mut result = vec![];
 
+    let mut powers_of_two = vec![];
+
+    for i in 0..31 {
+        if (n >> i) & 1 == 1 {
+            powers_of_two.push(1 << i);
+        }
+    }
+
+    let n = powers_of_two.len();
+    let mut prefix_sum = vec![1; n + 1];
+    for i in 0..n {
+        prefix_sum[i + 1] = (prefix_sum[i] * powers_of_two[i]) % MOD;
+    }
     for query in queries {
         let left = query[0] as usize;
         let right = query[1] as usize;
         let mut query = 1u64;
         for i in left..=right {
-            query *= (1 << power_of_twos[i]);
+            query *= 1 << powers_of_two[i];
         }
-        result.push(query);
+        result.push(query as i32);
     }
-
 
     result
 }
